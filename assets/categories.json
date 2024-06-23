@@ -1,0 +1,77 @@
+[
+	{
+		"id": "y6Z0P0fOez",
+		"name": "Salary",
+		"type": "income"
+	},
+	{
+		"id": "7lVMpoQouM",
+		"name": "Investment",
+		"type": "income"
+	},
+	{
+		"id": "KfZ90ijRyX",
+		"name": "Gift",
+		"type": "income"
+	},
+	{
+		"id": "6LX7HoOlG9",
+		"name": "Others",
+		"type": "income"
+	},
+	{
+		"id": "y0TleTay25",
+		"name": "Bills & Utilities",
+		"type": "expense"
+	},
+	{
+		"id": "xjA0rGWMIX",
+		"name": "Food & Dining",
+		"type": "expense"
+	},
+	{
+		"id": "pZOBN0moLW",
+		"name": "Groceries",
+		"type": "expense"
+	},
+	{
+		"id": "sSGpq9ysE5",
+		"name": "Rent & Mortgage",
+		"type": "expense"
+	},
+	{
+		"id": "7ygynzyh2Z",
+		"name": "Transportation",
+		"type": "expense"
+	},
+	{
+		"id": "UdpzXO6Vc5",
+		"name": "Entertainment",
+		"type": "expense"
+	},
+	{
+		"id": "3KQzTSSx5c",
+		"name": "Shopping",
+		"type": "expense"
+	},
+	{
+		"id": "1B31ZFfTAs",
+		"name": "Health & Fitness",
+		"type": "expense"
+	},
+	{
+		"id": "wNOdan3yOZ",
+		"name": "Insurance",
+		"type": "expense"
+	},
+	{
+		"id": "W3vsx7tlR2",
+		"name": "EMI & Debts",
+		"type": "expense"
+	},
+	{
+		"id": "SJMQkjcZ5N",
+		"name": "Others",
+		"type": "expense"
+	}
+]

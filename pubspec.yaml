@@ -1,0 +1,95 @@
+name: spendwise
+description: "An easy-to-use expense tracker mobile application with beautiful user interface."
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+    sdk: ">=3.4.3 <4.0.0"
+
+dependencies:
+    flutter:
+        sdk: flutter
+
+    cupertino_icons: ^1.0.6
+    intl: ^0.19.0
+    provider: ^6.1.2
+    sqflite: ^2.3.3+1
+    path_provider: ^2.1.3
+    path: ^1.9.0
+    shared_preferences: ^2.2.3
+
+dev_dependencies:
+    flutter_test:
+        sdk: flutter
+
+    flutter_lints: ^4.0.0
+
+flutter:
+    uses-material-design: true
+
+    # To add assets to your application, add an assets section, like this:
+    assets:
+        - assets/images/
+        - assets/categories.json
+
+    fonts:
+        - family: Poppins
+          fonts:
+              - asset: assets/fonts/bolditalic.ttf
+                weight: 700
+                style: italic
+              - asset: assets/fonts/semibolditalic.ttf
+                weight: 600
+                style: italic
+              - asset: assets/fonts/lightitalic.ttf
+                weight: 300
+                style: italic
+              - asset: assets/fonts/medium.ttf
+                weight: 500
+              - asset: assets/fonts/black.ttf
+                weight: 900
+              - asset: assets/fonts/thinitalic.ttf
+                weight: 100
+                style: italic
+              - asset: assets/fonts/blackitalic.ttf
+                weight: 900
+                style: italic
+              - asset: assets/fonts/bold.ttf
+                weight: 700
+              - asset: assets/fonts/italic.ttf
+                style: italic
+              - asset: assets/fonts/extralight.ttf
+                weight: 200
+              - asset: assets/fonts/extrabolditalic.ttf
+                weight: 800
+                style: italic
+              - asset: assets/fonts/thin.ttf
+                weight: 100
+              - asset: assets/fonts/extralightitalic.ttf
+                weight: 200
+                style: italic
+              - asset: assets/fonts/extrabold.ttf
+                weight: 800
+              - asset: assets/fonts/semibold.ttf
+                weight: 600
+              - asset: assets/fonts/light.ttf
+                weight: 300
+              - asset: assets/fonts/regular.ttf
+              - asset: assets/fonts/mediumitalic.ttf
+                weight: 500
+                style: italic
+    # For details regarding fonts from package dependencies,
+    # see https://flutter.dev/custom-fonts/#from-packages
