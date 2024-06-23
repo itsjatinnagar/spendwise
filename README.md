@@ -1,3 +1,14 @@
+<p align="center">
+    <img src="https://github.com/itsjatinnagar/spendwise/assets/121741542/143b72c2-6dfb-4f9a-af99-7a2f7c99d8c5" alt="spendwise" width="96" />
+</p>
+
+<div align="center">
+    <img alt="Latest Release" src="https://img.shields.io/github/v/release/itsjatinnagar/spendwise?style=flat-square">
+    <a href="https://github.com/itsjatinnagar/spendwise/releases/latest">
+        <img alt="Download" src="https://img.shields.io/badge/Download-22272e?logo=github">
+    </a>
+</div>
+
 <h1>Spendwise</h1>
 
 Spendwise is an Android application built using the Flutter framework. It helps users track their expenses and manage their finances efficiently.
