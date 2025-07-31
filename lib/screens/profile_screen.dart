@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../repositories/repositories.dart';
 import '../helpers/helpers.dart';
 import '../managers/managers.dart';
 import '../widgets/widgets.dart';
@@ -29,6 +30,14 @@ class ProfileScreen extends StatelessWidget {
               context,
               listen: false,
             ).goToManageAccount,
+          ),
+          SizedBox(height: 20.0),
+          _optionCard(
+            title: 'Export Data',
+            onTap: Provider.of<DataRepository>(
+              context,
+              listen: false,
+            ).exportData,
           ),
         ],
       ),

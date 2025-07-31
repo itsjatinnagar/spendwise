@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/services.dart';
 import '../helpers/helpers.dart';
 import '../managers/managers.dart';
@@ -204,6 +205,30 @@ class DataRepository {
       final db = await _databaseService.database;
       await db.insert(DatabaseService.accountTable, account.toMap());
       accountManager.createAccount(account);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void exportData() async {
+    try {
+      final db = await _databaseService.database;
+      final List<Map<String, dynamic>> accounts = await db.query(
+        DatabaseService.accountTable,
+      );
+      final List<Map<String, dynamic>> categories = await db.query(
+        DatabaseService.categoryTable,
+      );
+      final List<Map<String, dynamic>> transactions = await db.query(
+        DatabaseService.transactionTable,
+      );
+      final data = {
+        'accounts': accounts,
+        'categories': categories,
+        'transactions': transactions,
+      };
+      final file = File('/storage/emulated/0/Download/export_sw.json');
+      await file.writeAsString(jsonEncode(data));
     } catch (e) {
       print(e.toString());
     }
