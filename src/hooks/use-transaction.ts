@@ -1,5 +1,5 @@
 import { Transaction, TransactionRow } from "@/models/transaction";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSQLiteContext } from "expo-sqlite";
 
 const toJson = (entity: Transaction): TransactionRow => ({
@@ -30,7 +30,7 @@ export const useTransactions = () => {
     queryKey: ["transactions"],
     queryFn: async () => {
       const rows = await db.getAllAsync<TransactionRow>(
-        "SELECT * FROM transactions"
+        "SELECT * FROM transactions ORDER BY timestamp DESC"
       );
       return rows.map((row) => fromJson(row));
     },
@@ -39,7 +39,34 @@ export const useTransactions = () => {
 
 export const useCreateTransaction = () => {
   const db = useSQLiteContext();
+  const client = useQueryClient();
   return useMutation({
-    mutationFn: async () => {},
+    mutationFn: async (transaction: Transaction) => {
+      const request = toJson(transaction);
+      await db.runAsync(
+        `INSERT INTO transactions (id,wallet_id,category_id,related_txn,type,amount,timestamp,note) VALUES (?,?,?,?,?,?,?,?)`,
+        [
+          request.id,
+          request.wallet_id,
+          request.category_id,
+          request.related_txn ?? null,
+          request.type,
+          request.amount,
+          request.timestamp,
+          request.note ?? null,
+        ]
+      );
+      await db.runAsync(
+        `UPDATE wallets SET current_balance = current_balance ${
+          transaction.type === "income" ? "+" : "-"
+        } ? WHERE id = ?`,
+        [transaction.amount, transaction.walletId]
+      );
+    },
+    onSuccess: () => {
+      console.log("{useCreateTransaction}: onSuccess Inside Hook");
+      client.invalidateQueries({ queryKey: ["transactions"] });
+      client.invalidateQueries({ queryKey: ["wallets"] });
+    },
   });
 };
