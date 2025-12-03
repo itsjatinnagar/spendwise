@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Salary",
+    "type": 2
+  },
+  {
+    "name": "Investment",
+    "type": 2
+  },
+  {
+    "name": "Gift",
+    "type": 2
+  },
+  {
+    "name": "Others",
+    "type": 2
+  },
+  {
+    "name": "Rent & Mortgage",
+    "type": 1
+  },
+  {
+    "name": "Bills & Utilities",
+    "type": 1
+  },
+  {
+    "name": "Food & Dining",
+    "type": 1
+  },
+  {
+    "name": "Groceries",
+    "type": 1
+  },
+  {
+    "name": "Transportation",
+    "type": 1
+  },
+  {
+    "name": "Entertainment",
+    "type": 1
+  },
+  {
+    "name": "Shopping",
+    "type": 1
+  },
+  {
+    "name": "Health & Fitness",
+    "type": 1
+  },
+  {
+    "name": "Insurance",
+    "type": 1
+  },
+  {
+    "name": "Gift",
+    "type": 1
+  },
+  {
+    "name": "EMI & Debts",
+    "type": 1
+  },
+  {
+    "name": "Others",
+    "type": 1
+  }
+]

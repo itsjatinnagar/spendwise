@@ -3,6 +3,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SplashScreen, Stack } from "expo-router";
 import { SQLiteDatabase, SQLiteProvider, useSQLiteContext } from "expo-sqlite";
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
+import { ThemeProvider } from "@react-navigation/native";
+import { theme, useNativeTheme } from "@/utils/theme";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -13,7 +15,9 @@ export default function RootLayout() {
     <OnboardProvider>
       <SQLiteProvider databaseName="spendwise.db" onInit={initDB}>
         <QueryClientProvider client={client}>
-          <Children />
+          <ThemeProvider value={theme}>
+            <Children />
+          </ThemeProvider>
         </QueryClientProvider>
       </SQLiteProvider>
     </OnboardProvider>
@@ -22,12 +26,19 @@ export default function RootLayout() {
 
 function Children() {
   useDrizzleStudio(useSQLiteContext());
+
+  const theme = useNativeTheme();
   const { isOnboarded } = useOnboard();
 
   if (isOnboarded == null) return;
 
+  const options = {
+    headerShown: false,
+    contentStyle: { backgroundColor: theme.colors.surface },
+  };
+
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    <Stack screenOptions={options}>
       <Stack.Protected guard={isOnboarded}>
         <Stack.Screen name="(tabs)" />
       </Stack.Protected>
@@ -56,27 +67,22 @@ const initDB = async (db: SQLiteDatabase) => {
       );
       CREATE TABLE wallets (
         id CHAR(36) PRIMARY KEY,
-        user_id CHAR(36) NOT NULL,
         name TEXT NOT NULL,
         type INTEGER NOT NULL,
         initial_balance DECIMAL(19, 4) NOT NULL,
         current_balance DECIMAL(19, 4) NOT NULL,
-        created_at TEXT NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        created_at TEXT NOT NULL
       );
       CREATE TABLE categories (
         id CHAR(36) PRIMARY KEY,
-        user_id CHAR(36) NOT NULL,
         name TEXT NOT NULL,
         type INTEGER NOT NULL,
         parent_id CHAR(36),
         created_at TEXT NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
         FOREIGN KEY (parent_id) REFERENCES categories(id) ON DELETE SET NULL
       );
       CREATE TABLE transactions (
         id CHAR(36) PRIMARY KEY,
-        user_id CHAR(36) NOT NULL,
         wallet_id CHAR(36) NOT NULL,
         category_id CHAR(36) NOT NULL,
         type INTEGER NOT NULL,
@@ -85,37 +91,31 @@ const initDB = async (db: SQLiteDatabase) => {
         timestamp TEXT NOT NULL,
         related_txn CHAR(36),
         created_at TEXT NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
         FOREIGN KEY (wallet_id) REFERENCES wallets (id) ON DELETE RESTRICT,
         FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE SET NULL,
         FOREIGN KEY (related_txn) REFERENCES transactions (id) ON DELETE SET NULL
       );
       CREATE TABLE transfers (
         id CHAR(36) PRIMARY KEY,
-        user_id CHAR(36) NOT NULL,
         from_wallet CHAR(36) NOT NULL,
         to_wallet CHAR(36) NOT NULL,
         amount DECIMAL(19,4) NOT NULL,
         timestamp TEXT NOT NULL,
         created_at TEXT NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
         FOREIGN KEY (from_wallet) REFERENCES wallets (id) ON DELETE RESTRICT,
         FOREIGN KEY (to_wallet) REFERENCES wallets (id) ON DELETE RESTRICT
       );
       CREATE TABLE budgets (
         id CHAR(36) PRIMARY KEY,
-        user_id CHAR(36) NOT NULL,
         category_id CHAR(36) NOT NULL,
         amount DECIMAL(19, 4) NOT NULL,
         year CHAR(4) NOT NULL,
         month VARCHAR(2) NOT NULL,
         created_at TEXT NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
         FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE
       );
       CREATE TABLE loans (
         id CHAR(36) PRIMARY KEY,
-        user_id CHAR(36) NOT NULL,
         person TEXT NOT NULL,
         type INTEGER NOT NULL,
         repaid DECIMAL(19, 4) NOT NULL,
@@ -123,7 +123,6 @@ const initDB = async (db: SQLiteDatabase) => {
         note TEXT,
         transaction_id CHAR(36) NOT NULL,
         created_at TEXT NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
         FOREIGN KEY (transaction_id) REFERENCES transactions (id) ON DELETE RESTRICT
       );
     `);
