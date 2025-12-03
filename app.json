@@ -15,7 +15,9 @@
         "monochromeImage": "./assets/images/icon.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": true
+      "predictiveBackGestureEnabled": true,
+      "package": "com.itsjatinnagar.spendwise",
+      "versionCode": 1
     },
     "plugins": [
       "expo-router",
