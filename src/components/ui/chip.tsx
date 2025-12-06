@@ -25,7 +25,7 @@ export default function Chip({ active, icon, label, onPress }: Props) {
       <Text
         style={[
           styles.label,
-          { color: active ? colors.foreground : colors.placeholder },
+          { color: active ? colors.text : colors.placeholder },
         ]}
       >
         {label}

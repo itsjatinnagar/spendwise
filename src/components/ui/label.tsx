@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextProps } from "react-native";
 export default function Label({ children, style, ...props }: TextProps) {
   const { colors } = useNativeTheme();
 
-  style = [styles.text, { color: colors.foreground }, style];
+  style = [styles.text, { color: colors.text }, style];
 
   return (
     <Text style={style} {...props}>

@@ -35,7 +35,20 @@ export const useTransactions = () => {
   return useQuery({
     queryKey: ["transactions"],
     queryFn: async () => {
-      const query = "SELECT * FROM transactions";
+      const query = "SELECT * FROM transactions ORDER BY created_at DESC";
+      const rows = await db.getAllAsync<TransactionRow>(query);
+      return rows.map((row) => fromJson(row));
+    },
+  });
+};
+
+export const useRecentTransactions = () => {
+  const db = useSQLiteContext();
+  return useQuery({
+    queryKey: ["transactions", "recents"],
+    queryFn: async () => {
+      const query =
+        "SELECT * FROM transactions ORDER BY timestamp DESC LIMIT 4";
       const rows = await db.getAllAsync<TransactionRow>(query);
       return rows.map((row) => fromJson(row));
     },

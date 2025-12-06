@@ -26,8 +26,8 @@ export default function Screen() {
             { backgroundColor: colors.primary },
           ]}
         >
-          <MaterialIcons name="edit" size={20} color={colors.foreground} />
-          <Text style={[styles.label, { color: colors.foreground }]}>
+          <MaterialIcons name="edit" size={20} color={colors.text} />
+          <Text style={[styles.label, { color: colors.text }]}>
             Edit Transaction
           </Text>
         </Pressable>

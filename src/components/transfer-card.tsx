@@ -29,14 +29,10 @@ export default function TransferCard({ transfer, wallets }: Props) {
             { backgroundColor: colors.transfer },
           ]}
         >
-          <Feather
-            name="arrow-right"
-            size={20}
-            color={colors.transferForeground}
-          />
+          <Feather name="arrow-right" size={20} color={colors.transferText} />
         </View>
         <View>
-          <Text style={[styles.title, { color: colors.foreground }]}>
+          <Text style={[styles.title, { color: colors.text }]}>
             {formatAmount(transfer.amount)}
           </Text>
           <Text style={{ marginTop: 6, color: colors.placeholder }}>
@@ -58,11 +54,7 @@ export default function TransferCard({ transfer, wallets }: Props) {
               pressed && { backgroundColor: colors.danger },
             ]}
           >
-            <MaterialIcons
-              name="delete"
-              color={colors.dangerForeground}
-              size={16}
-            />
+            <MaterialIcons name="delete" color={colors.dangerText} size={16} />
           </Pressable>
         </View>
       </View>
@@ -71,17 +63,17 @@ export default function TransferCard({ transfer, wallets }: Props) {
         <View style={[styles.wallet, { backgroundColor: colors.transfer }]}>
           <Text style={{ color: colors.placeholder }}>From</Text>
           <Text
-            style={{ marginTop: 6, color: colors.foreground, fontSize: 16 }}
+            style={{ marginTop: 6, color: colors.text, fontSize: 16 }}
             numberOfLines={1}
           >
             {fromWallet.name}
           </Text>
         </View>
-        <Feather name="arrow-right" size={20} color={colors.foreground} />
+        <Feather name="arrow-right" size={20} color={colors.text} />
         <View style={[styles.wallet, { backgroundColor: colors.transfer }]}>
           <Text style={{ color: colors.placeholder }}>To</Text>
           <Text
-            style={{ marginTop: 6, color: colors.foreground, fontSize: 16 }}
+            style={{ marginTop: 6, color: colors.text, fontSize: 16 }}
             numberOfLines={1}
           >
             {toWallet.name}

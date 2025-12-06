@@ -80,8 +80,7 @@ export default function TransactionForm({ categories, wallets }: Props) {
             style={[
               styles.label,
               {
-                color:
-                  state.type == 1 ? colors.dangerForeground : colors.foreground,
+                color: state.type == 1 ? colors.dangerText : colors.text,
               },
             ]}
           >
@@ -101,10 +100,7 @@ export default function TransactionForm({ categories, wallets }: Props) {
             style={[
               styles.label,
               {
-                color:
-                  state.type == 2
-                    ? colors.successForeground
-                    : colors.foreground,
+                color: state.type == 2 ? colors.successText : colors.text,
               },
             ]}
           >
@@ -161,7 +157,7 @@ export default function TransactionForm({ categories, wallets }: Props) {
                   color={
                     state.category === category.id
                       ? colors.primary
-                      : colors.foreground
+                      : colors.text
                   }
                   size={14}
                 />

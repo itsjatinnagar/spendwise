@@ -7,11 +7,11 @@ const palette = {
   surface: "rgb(255, 251, 235)", // yellow-50
   placeholder: "rgb(144, 161, 185)", // slate-400
   danger: "rgb(254, 242, 242)", // red-50
-  dangerForeground: "rgb(193, 0, 7)", // red-700
+  dangerText: "rgb(193, 0, 7)", // red-700
   success: "rgb(236, 253, 245)", // emerald-50
-  successForeground: "rgb(0, 122, 85)", // emerald-700
+  successText: "rgb(0, 122, 85)", // emerald-700
   transfer: "rgb(250, 245, 255)", // purple-50
-  transferForeground: "rgb(130, 0, 219)", // purple-700
+  transferText: "rgb(130, 0, 219)", // purple-700
 };
 
 export const theme: NativeTheme = {
@@ -19,17 +19,16 @@ export const theme: NativeTheme = {
   colors: {
     ...DefaultTheme.colors,
     background: palette.background,
-    foreground: palette.foreground,
     primary: palette.primary,
     surface: palette.surface,
     text: palette.foreground,
     placeholder: palette.placeholder,
     danger: palette.danger,
-    dangerForeground: palette.dangerForeground,
+    dangerText: palette.dangerText,
     success: palette.success,
-    successForeground: palette.successForeground,
+    successText: palette.successText,
     transfer: palette.transfer,
-    transferForeground: palette.transferForeground,
+    transferText: palette.transferText,
   },
   fonts: {
     ...DefaultTheme.fonts,

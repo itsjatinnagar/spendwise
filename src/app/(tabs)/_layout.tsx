@@ -1,13 +1,13 @@
+import { useNativeTheme } from "@/utils/theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
-import { useTheme } from "@react-navigation/native";
 import { Tabs } from "expo-router";
 
 export default function Layout() {
-  const { colors } = useTheme();
+  const { colors } = useNativeTheme();
   const options: BottomTabNavigationOptions = {
     headerShown: false,
-    sceneStyle: { backgroundColor: colors.card },
+    sceneStyle: { backgroundColor: colors.surface },
     tabBarActiveTintColor: colors.primary,
     tabBarInactiveTintColor: colors.text,
     tabBarLabelPosition: "beside-icon",

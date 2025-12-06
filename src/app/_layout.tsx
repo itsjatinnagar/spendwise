@@ -5,6 +5,7 @@ import { SQLiteDatabase, SQLiteProvider, useSQLiteContext } from "expo-sqlite";
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
 import { ThemeProvider } from "@react-navigation/native";
 import { theme, useNativeTheme } from "@/utils/theme";
+import { StatusBar } from "expo-status-bar";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,6 +18,7 @@ export default function RootLayout() {
         <QueryClientProvider client={client}>
           <ThemeProvider value={theme}>
             <Children />
+            <StatusBar style="dark" />
           </ThemeProvider>
         </QueryClientProvider>
       </SQLiteProvider>

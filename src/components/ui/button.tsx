@@ -15,7 +15,7 @@ export default function Button({ disabled, label, style, ...props }: Props) {
 
   return (
     <Pressable style={style} {...props}>
-      <Text style={[styles.label, { color: colors.foreground }]}>{label}</Text>
+      <Text style={[styles.label, { color: colors.text }]}>{label}</Text>
     </Pressable>
   );
 }

@@ -8,10 +8,10 @@ export default function Input({ style, ...props }: TextInputProps) {
     <TextInput
       style={[
         styles.input,
-        { backgroundColor: colors.background, color: colors.foreground },
+        { backgroundColor: colors.background, color: colors.text },
       ]}
-      cursorColor={colors.foreground}
-      selectionColor={colors.foreground}
+      cursorColor={colors.text}
+      selectionColor={colors.text}
       returnKeyType="done"
       placeholderTextColor={colors.placeholder}
       {...props}
