@@ -12,7 +12,7 @@ export default function WalletCard({ wallet }: Props) {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={[styles.title, { color: colors.foreground }]}>
+        <Text style={[styles.title, { color: colors.text }]}>
           {wallet.name}
         </Text>
 
@@ -31,11 +31,7 @@ export default function WalletCard({ wallet }: Props) {
               pressed && { backgroundColor: colors.danger },
             ]}
           >
-            <MaterialIcons
-              name="delete"
-              color={colors.dangerForeground}
-              size={16}
-            />
+            <MaterialIcons name="delete" color={colors.dangerText} size={16} />
           </Pressable>
         </View>
       </View>

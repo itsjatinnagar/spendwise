@@ -4,15 +4,14 @@ import { ColorValue, TextStyle } from "react-native";
 declare module "@react-navigation/native" {
   export type NativeTheme = Theme & {
     colors: {
-      foreground: ColorValue;
       surface: ColorValue;
       placeholder: ColorValue;
       danger: ColorValue;
-      dangerForeground: ColorValue;
+      dangerText: ColorValue;
       success: ColorValue;
-      successForeground: ColorValue;
+      successText: ColorValue;
       transfer: ColorValue;
-      transferForeground: ColorValue;
+      transferText: ColorValue;
     };
     fonts: {
       headline: TextStyle;

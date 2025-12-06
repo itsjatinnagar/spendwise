@@ -33,7 +33,7 @@ export default function Screen() {
 
         <Link href="/transactions/modal">
           <View style={[styles.action, { backgroundColor: colors.primary }]}>
-            <MaterialIcons name="add" size={20} color={colors.foreground} />
+            <MaterialIcons name="add" size={20} color={colors.text} />
           </View>
         </Link>
       </View>

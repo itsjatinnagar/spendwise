@@ -15,7 +15,7 @@
         "monochromeImage": "./assets/images/icon.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": true,
+      "predictiveBackGestureEnabled": false,
       "package": "com.itsjatinnagar.spendwise",
       "versionCode": 1
     },
