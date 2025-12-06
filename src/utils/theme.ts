@@ -10,6 +10,8 @@ const palette = {
   dangerForeground: "rgb(193, 0, 7)", // red-700
   success: "rgb(236, 253, 245)", // emerald-50
   successForeground: "rgb(0, 122, 85)", // emerald-700
+  transfer: "rgb(250, 245, 255)", // purple-50
+  transferForeground: "rgb(130, 0, 219)", // purple-700
 };
 
 export const theme: NativeTheme = {
@@ -26,6 +28,8 @@ export const theme: NativeTheme = {
     dangerForeground: palette.dangerForeground,
     success: palette.success,
     successForeground: palette.successForeground,
+    transfer: palette.transfer,
+    transferForeground: palette.transferForeground,
   },
   fonts: {
     ...DefaultTheme.fonts,

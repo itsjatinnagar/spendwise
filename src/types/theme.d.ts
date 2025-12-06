@@ -11,6 +11,8 @@ declare module "@react-navigation/native" {
       dangerForeground: ColorValue;
       success: ColorValue;
       successForeground: ColorValue;
+      transfer: ColorValue;
+      transferForeground: ColorValue;
     };
     fonts: {
       headline: TextStyle;
