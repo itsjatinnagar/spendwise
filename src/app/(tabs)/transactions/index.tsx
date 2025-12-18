@@ -59,8 +59,7 @@ export default function Screen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    paddingBottom: 0,
+    paddingHorizontal: 20,
   },
   header: {
     alignItems: "center",

@@ -44,7 +44,7 @@ export default function Screen() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={["left", "right", "top"]} style={styles.container}>
       <View style={styles.header}>
         <Text style={fonts.title}>Hello, {firstName}</Text>
 
@@ -151,7 +151,7 @@ export default function Screen() {
         </Link>
       </View>
 
-      <View>
+      <View style={{ flex: 1, paddingBottom: 6 }}>
         <View>
           <Text style={{ color: colors.text, fontSize: 16, fontWeight: 600 }}>
             Recent Transactions
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   container: {
     gap: 30,
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
   },
   header: {
     alignItems: "center",
