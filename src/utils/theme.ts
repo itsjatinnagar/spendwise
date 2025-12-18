@@ -12,6 +12,8 @@ const palette = {
   successText: "rgb(0, 122, 85)", // emerald-700
   transfer: "rgb(250, 245, 255)", // purple-50
   transferText: "rgb(130, 0, 219)", // purple-700
+  refund: "rgb(239, 246, 255)", // blue-50
+  refundText: "rgb(20, 71, 230)", // blue-700
 };
 
 export const theme: NativeTheme = {
@@ -29,6 +31,8 @@ export const theme: NativeTheme = {
     successText: palette.successText,
     transfer: palette.transfer,
     transferText: palette.transferText,
+    refund: palette.refund,
+    refundText: palette.refundText,
   },
   fonts: {
     ...DefaultTheme.fonts,

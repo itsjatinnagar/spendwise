@@ -12,6 +12,8 @@ declare module "@react-navigation/native" {
       successText: ColorValue;
       transfer: ColorValue;
       transferText: ColorValue;
+      refund: ColorValue;
+      refundText: ColorValue;
     };
     fonts: {
       headline: TextStyle;

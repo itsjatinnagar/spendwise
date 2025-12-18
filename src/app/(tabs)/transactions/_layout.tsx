@@ -23,6 +23,14 @@ export default function Layout() {
         }}
       />
       <Stack.Screen
+        name="refund"
+        options={{
+          headerTitle: "Create Refund",
+          headerTitleAlign: "center",
+          headerShadowVisible: false,
+        }}
+      />
+      <Stack.Screen
         name="[id]"
         options={{ headerTitle: "", headerShadowVisible: false }}
       />
