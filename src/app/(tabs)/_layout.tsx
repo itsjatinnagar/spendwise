@@ -12,7 +12,7 @@ export default function Layout() {
     tabBarInactiveTintColor: colors.text,
     tabBarLabelPosition: "beside-icon",
     tabBarShowLabel: false,
-    tabBarStyle: { height: 60, elevation: 0, borderTopWidth: 0 },
+    tabBarStyle: { height: 64, elevation: 0, borderTopWidth: 0 },
   };
 
   return (
