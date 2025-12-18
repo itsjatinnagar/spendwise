@@ -91,6 +91,7 @@ export const useCreateTransaction = () => {
     },
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ["transactions"] });
+      client.invalidateQueries({ queryKey: ["wallets"] });
     },
   });
 };

@@ -57,6 +57,7 @@ export const useCreateTransfer = () => {
     },
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ["transfers"] });
+      client.invalidateQueries({ queryKey: ["wallets"] });
     },
   });
 };
