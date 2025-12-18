@@ -3,6 +3,7 @@ import { Transaction, TransactionType } from "@/models/transaction";
 import { Wallet } from "@/models/wallet";
 import { useNativeTheme } from "@/utils/theme";
 import Feather from "@expo/vector-icons/Feather";
+import { Link } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 
 type Props = {
@@ -23,7 +24,7 @@ export default function TransactionCard({
 
   let backgroundColor,
     color,
-    icon: "arrow-down-left" | "arrow-up-right" | "minus";
+    icon: "arrow-down-left" | "arrow-up-right" | "rotate-ccw" | "minus";
   switch (transaction.type) {
     case TransactionType.EXPENSE:
       backgroundColor = colors.danger;
@@ -35,45 +36,54 @@ export default function TransactionCard({
       color = colors.successText;
       icon = "arrow-up-right";
       break;
+    case TransactionType.REFUND:
+      backgroundColor = colors.refund;
+      color = colors.refundText;
+      icon = "rotate-ccw";
+      break;
     default:
       icon = "minus";
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <View>
-        <View
-          style={[
-            {
-              height: 32,
-              width: 32,
-              borderRadius: 12,
-              alignItems: "center",
-              justifyContent: "center",
-            },
-            { backgroundColor: backgroundColor },
-          ]}
-        >
-          <Feather name={icon} size={20} color={color} />
+    <Link href={`/transactions/${transaction.id}`}>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <View>
+          <View
+            style={[
+              {
+                height: 32,
+                width: 32,
+                borderRadius: 12,
+                alignItems: "center",
+                justifyContent: "center",
+              },
+              { backgroundColor: backgroundColor },
+            ]}
+          >
+            <Feather name={icon} size={20} color={color} />
+          </View>
+        </View>
+
+        <View style={{ gap: 4, flex: 1 }}>
+          <Text style={[styles.title, { color: color }]}>{category.name}</Text>
+
+          <Text style={{ color: colors.placeholder }}>
+            {formatDate(transaction.timestamp)}
+          </Text>
+
+          {transaction.note && (
+            <Text style={{ marginTop: 6 }}>{transaction.note}</Text>
+          )}
+        </View>
+
+        <View>
+          <Text style={{ color: color }}>
+            {formatAmount(transaction.amount)}
+          </Text>
         </View>
       </View>
-
-      <View style={{ gap: 4, flex: 1 }}>
-        <Text style={[styles.title, { color: color }]}>{category.name}</Text>
-
-        <Text style={{ color: colors.placeholder }}>
-          {formatDate(transaction.timestamp)}
-        </Text>
-
-        {transaction.note && (
-          <Text style={{ marginTop: 6 }}>{transaction.note}</Text>
-        )}
-      </View>
-
-      <View>
-        <Text style={{ color: color }}>{formatAmount(transaction.amount)}</Text>
-      </View>
-    </View>
+    </Link>
   );
 }
 

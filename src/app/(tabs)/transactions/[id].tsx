@@ -1,7 +1,7 @@
 import { useTransaction } from "@/hooks/use-transaction";
 import { useNativeTheme } from "@/utils/theme";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 
 export default function Screen() {
@@ -19,27 +19,14 @@ export default function Screen() {
       <View style={{ flex: 1 }}>
         <Text style={fonts.title}>My Transaction</Text>
       </View>
-      <View style={styles.row}>
-        <Pressable
-          style={({ pressed }) => [
-            styles.primary,
-            { backgroundColor: colors.primary },
-          ]}
-        >
-          <MaterialIcons name="edit" size={20} color={colors.text} />
+      <Link href={`/transactions/refund?txnId=${transaction.id}`}>
+        <View style={[styles.primary, { backgroundColor: colors.primary }]}>
+          <MaterialIcons name="rotate-left" size={20} color={colors.text} />
           <Text style={[styles.label, { color: colors.text }]}>
-            Edit Transaction
+            Create Refund
           </Text>
-        </Pressable>
-        <Pressable
-          style={({ pressed }) => [
-            styles.delete,
-            { backgroundColor: colors.danger },
-          ]}
-        >
-          <MaterialIcons name="delete" size={24} color={colors.background} />
-        </Pressable>
-      </View>
+        </View>
+      </Link>
     </View>
   );
 }
@@ -57,6 +44,7 @@ const styles = StyleSheet.create({
     gap: 5,
     flex: 1,
     height: 48,
+    width: "100%",
     borderRadius: 48,
     alignItems: "center",
     flexDirection: "row",
