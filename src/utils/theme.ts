@@ -41,12 +41,14 @@ export const theme: NativeTheme = {
       fontSize: 54,
       fontWeight: 800,
       color: palette.foreground,
+      lineHeight: 64.8,
     },
     title: {
       fontFamily: "Poppins",
       fontSize: 28,
       fontWeight: 700,
       color: palette.foreground,
+      lineHeight: 33.6,
     },
   },
 } as const;
