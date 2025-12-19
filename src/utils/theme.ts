@@ -36,8 +36,18 @@ export const theme: NativeTheme = {
   },
   fonts: {
     ...DefaultTheme.fonts,
-    headline: { fontSize: 54, fontWeight: 800, color: palette.foreground },
-    title: { fontSize: 28, fontWeight: 700, color: palette.foreground },
+    headline: {
+      fontFamily: "Poppins",
+      fontSize: 54,
+      fontWeight: 800,
+      color: palette.foreground,
+    },
+    title: {
+      fontFamily: "Poppins",
+      fontSize: 28,
+      fontWeight: 700,
+      color: palette.foreground,
+    },
   },
 } as const;
 

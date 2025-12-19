@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   footer: {
+    fontFamily: "Poppins",
     fontSize: 13,
     textAlign: "center",
   },

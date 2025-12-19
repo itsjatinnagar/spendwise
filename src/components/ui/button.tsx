@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   },
   disabled: {},
   label: {
+    fontFamily: "Poppins",
     fontSize: 16,
     fontWeight: 600,
   },
