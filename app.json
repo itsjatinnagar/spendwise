@@ -30,7 +30,102 @@
           "backgroundColor": "#FFFFFF"
         }
       ],
-      "expo-sqlite"
+      "expo-sqlite",
+      [
+        "expo-font",
+        {
+          "android": {
+            "fonts": [
+              {
+                "fontFamily": "Poppins",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/Poppins-Thin.ttf",
+                    "weight": 100
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-ThinItalic.ttf",
+                    "weight": 100,
+                    "style": "italic"
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-ExtraLight.ttf",
+                    "weight": 200
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-ExtraLightItalic.ttf",
+                    "weight": 200,
+                    "style": "italic"
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-Light.ttf",
+                    "weight": 300
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-LightItalic.ttf",
+                    "weight": 300,
+                    "style": "italic"
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-Regular.ttf",
+                    "weight": 400
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-Italic.ttf",
+                    "weight": 400,
+                    "style": "italic"
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-Medium.ttf",
+                    "weight": 500
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-MediumItalic.ttf",
+                    "weight": 500,
+                    "style": "italic"
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-SemiBold.ttf",
+                    "weight": 600
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-SemiBoldItalic.ttf",
+                    "weight": 600,
+                    "style": "italic"
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-Bold.ttf",
+                    "weight": 700
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-BoldItalic.ttf",
+                    "weight": 700,
+                    "style": "italic"
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-ExtraBold.ttf",
+                    "weight": 800
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-ExtraBoldItalic.ttf",
+                    "weight": 800,
+                    "style": "italic"
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-Black.ttf",
+                    "weight": 900
+                  },
+                  {
+                    "path": "./assets/fonts/Poppins-BlackItalic.ttf",
+                    "weight": 900,
+                    "style": "italic"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

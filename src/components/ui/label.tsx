@@ -15,6 +15,7 @@ export default function Label({ children, style, ...props }: TextProps) {
 
 const styles = StyleSheet.create({
   text: {
+    fontFamily: "Poppins",
     fontSize: 14,
   },
 });

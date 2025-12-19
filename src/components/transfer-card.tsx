@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   title: {
+    fontFamily: "Poppins",
     fontSize: 16,
     fontWeight: 500,
   },

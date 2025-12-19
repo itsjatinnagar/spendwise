@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   label: {
+    fontFamily: "Poppins",
     fontSize: 16,
   },
 });

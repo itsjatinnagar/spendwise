@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   heading: {
+    fontFamily: "Poppins",
     fontSize: 32,
     fontWeight: 600,
   },

@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   title: {
+    fontFamily: "Poppins",
     fontSize: 16,
     fontWeight: 500,
   },
