@@ -2,17 +2,59 @@ import { useUser } from "@/hooks/use-user";
 import { useNativeTheme } from "@/utils/theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { File } from "expo-file-system";
+import { StorageAccessFramework as SAF } from "expo-file-system/legacy";
+import { useWallets } from "@/hooks/use-wallet";
+import { useTransactions } from "@/hooks/use-transaction";
+import { useTransfers } from "@/hooks/use-transfer";
 
 export default function Screen() {
   const { colors } = useNativeTheme();
   const { data: user, isLoading: isL1 } = useUser();
 
-  if (isL1) return;
+  const { data: wallets, isLoading: isL2 } = useWallets();
+  const { data: transactions, isLoading: isL3 } = useTransactions();
+  const { data: transfers, isLoading: isL4 } = useTransfers();
 
-  if (user === null || user === undefined)
+  if (isL1 || isL2 || isL3 || isL4) return;
+
+  if (
+    user === null ||
+    user === undefined ||
+    wallets === null ||
+    wallets === undefined ||
+    transactions === null ||
+    transactions === undefined ||
+    transfers === null ||
+    transfers === undefined
+  )
     return Alert.alert("Error", "Undefined Data: Profile Screen");
+
+  async function handleExport() {
+    const data = {
+      wallets: wallets,
+      transactions: transactions,
+      transfers: transfers,
+    };
+
+    try {
+      const string = JSON.stringify(data, null, 2);
+      const permissions = await SAF.requestDirectoryPermissionsAsync();
+      if (!permissions.granted) return;
+
+      const uri = await SAF.createFileAsync(
+        permissions.directoryUri,
+        "backup_spendwise.json",
+        "application/json"
+      );
+      const file = new File(uri);
+      file.write(string);
+    } catch (error) {
+      console.error("Something Went Wrong", error);
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -61,6 +103,13 @@ export default function Screen() {
             <MaterialIcons name="chevron-right" size={22} />
           </View>
         </Link>
+        <View style={{ borderTopWidth: 1, borderTopColor: "#f3f4f6" }} />
+        <Pressable onPress={handleExport}>
+          <View style={styles.tile}>
+            <Text style={{ fontSize: 18, fontWeight: 600 }}>Export Data</Text>
+            <MaterialIcons name="chevron-right" size={22} />
+          </View>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
