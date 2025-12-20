@@ -97,6 +97,15 @@ export default function Screen() {
           </View>
         </Link>
         <View style={{ borderTopWidth: 1, borderTopColor: "#f3f4f6" }} />
+        <Link href="/transactions">
+          <View style={styles.tile}>
+            <Text style={{ fontSize: 18, fontWeight: 600 }}>
+              My Transactions
+            </Text>
+            <MaterialIcons name="chevron-right" size={22} />
+          </View>
+        </Link>
+        <View style={{ borderTopWidth: 1, borderTopColor: "#f3f4f6" }} />
         <Link href="/transfers">
           <View style={styles.tile}>
             <Text style={{ fontSize: 18, fontWeight: 600 }}>Transfers</Text>
