@@ -26,14 +26,6 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="transactions"
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="calendar-month" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="profile"
         options={{
           tabBarIcon: ({ color, size }) => (
