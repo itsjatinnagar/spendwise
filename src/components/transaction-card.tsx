@@ -29,12 +29,12 @@ export default function TransactionCard({
     case TransactionType.EXPENSE:
       backgroundColor = colors.danger;
       color = colors.dangerText;
-      icon = "arrow-down-left";
+      icon = "arrow-up-right";
       break;
     case TransactionType.INCOME:
       backgroundColor = colors.success;
       color = colors.successText;
-      icon = "arrow-up-right";
+      icon = "arrow-down-left";
       break;
     case TransactionType.REFUND:
       backgroundColor = colors.refund;
