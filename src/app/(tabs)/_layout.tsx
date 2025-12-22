@@ -26,6 +26,14 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
+        name="statistics"
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="bar-chart" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           tabBarIcon: ({ color, size }) => (

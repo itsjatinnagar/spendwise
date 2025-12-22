@@ -1,11 +1,12 @@
 import { useCategories } from "@/hooks/use-category";
-import { useTransaction } from "@/hooks/use-transaction";
+import { useDeleteTransaction, useTransaction } from "@/hooks/use-transaction";
 import { useWallets } from "@/hooks/use-wallet";
-import { TransactionType } from "@/models/transaction";
+import { Transaction, TransactionType } from "@/models/transaction";
 import { useNativeTheme } from "@/utils/theme";
 import { Feather, MaterialIcons } from "@expo/vector-icons";
-import { Link, useLocalSearchParams } from "expo-router";
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Link, useLocalSearchParams, useNavigation } from "expo-router";
+import { useEffect } from "react";
+import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 
 export default function Screen() {
   const { id } = useLocalSearchParams();
@@ -115,6 +116,7 @@ export default function Screen() {
           </View>
         </Link>
       )}
+      <Actions transaction={transaction} />
     </View>
   );
 }
@@ -154,6 +156,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 20,
   },
+  action: {
+    width: 36,
+    height: 36,
+    borderRadius: "50%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 
 function formatAmount(amount: string) {
@@ -169,4 +178,64 @@ function formatDate(date: Date) {
     dateStyle: "full",
     timeStyle: "short",
   }).format(date);
+}
+
+type Props = {
+  transaction: Transaction;
+};
+function Actions({ transaction }: Props) {
+  const { mutateAsync: deleteTransaction } = useDeleteTransaction();
+  const { colors } = useNativeTheme();
+  const navigation = useNavigation();
+
+  async function handleDelete() {
+    if (transaction === null || transaction === undefined) return;
+    await deleteTransaction(transaction);
+    navigation.goBack();
+  }
+
+  const confirmDelete = () =>
+    Alert.alert(
+      "Delete Transaction",
+      "Are you sure you want to delete this transaction?",
+      [
+        { text: "No, cancel", style: "cancel" },
+        { text: "Yes, I'm sure", style: "destructive", onPress: handleDelete },
+      ],
+      { cancelable: true }
+    );
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: ({}) => (
+        <View
+          style={{
+            gap: 10,
+            alignItems: "center",
+            flexDirection: "row",
+          }}
+        >
+          <Pressable
+            style={({ pressed }) => [
+              styles.action,
+              pressed && { backgroundColor: colors.surface },
+            ]}
+          >
+            <MaterialIcons name="edit" size={20} color={colors.primary} />
+          </Pressable>
+          <Pressable
+            style={({ pressed }) => [
+              styles.action,
+              pressed && { backgroundColor: colors.danger },
+            ]}
+            onPress={() => confirmDelete()}
+          >
+            <MaterialIcons name="delete" size={20} color={colors.dangerText} />
+          </Pressable>
+        </View>
+      ),
+    });
+  }, [navigation]);
+
+  return <></>;
 }
