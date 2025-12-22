@@ -95,3 +95,25 @@ export const useCreateTransaction = () => {
     },
   });
 };
+
+export const useDeleteTransaction = () => {
+  const db = useSQLiteContext();
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: async (transaction: Transaction) => {
+      await db.runAsync(
+        `UPDATE wallets SET current_balance = current_balance ${
+          transaction.type === TransactionType.EXPENSE ? "+" : "-"
+        } ? WHERE id = ?`,
+        [transaction.amount, transaction.walletId]
+      );
+      await db.runAsync("DELETE FROM transactions WHERE id = ?", [
+        transaction.id,
+      ]);
+    },
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ["transactions"] });
+      client.invalidateQueries({ queryKey: ["wallets"] });
+    },
+  });
+};

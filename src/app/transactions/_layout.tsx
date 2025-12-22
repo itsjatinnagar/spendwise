@@ -1,7 +1,7 @@
 import { useNativeTheme } from "@/utils/theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Link, Stack } from "expo-router";
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default function Layout() {
   const { colors, fonts } = useNativeTheme();
@@ -58,30 +58,6 @@ export default function Layout() {
         options={{
           headerTitle: "",
           headerShadowVisible: false,
-          headerRight: ({}) => (
-            <View style={styles.row}>
-              <Pressable
-                style={({ pressed }) => [
-                  styles.action,
-                  pressed && { backgroundColor: colors.surface },
-                ]}
-              >
-                <MaterialIcons name="edit" size={20} color={colors.primary} />
-              </Pressable>
-              <Pressable
-                style={({ pressed }) => [
-                  styles.action,
-                  pressed && { backgroundColor: colors.danger },
-                ]}
-              >
-                <MaterialIcons
-                  name="delete"
-                  size={20}
-                  color={colors.dangerText}
-                />
-              </Pressable>
-            </View>
-          ),
         }}
       />
     </Stack>
