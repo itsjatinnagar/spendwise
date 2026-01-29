@@ -31,11 +31,11 @@ export default function TransferForm({ wallets }: Props) {
 
   async function handleSubmit() {
     const transfer: Transfer = {
-      amount: state.amount.trim(),
-      createdAt: new Date(),
+      amount: Number(state.amount.trim()),
+      createdAt: new Date().toISOString(),
       fromWallet: state.from.trim(),
       id: uuid(),
-      timestamp: state.timestamp,
+      timestamp: state.timestamp.toISOString(),
       toWallet: state.to.trim(),
     };
     await createTransfer(transfer);

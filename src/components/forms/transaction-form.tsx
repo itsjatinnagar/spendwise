@@ -46,13 +46,13 @@ export default function TransactionForm({ categories, wallets }: Props) {
     )
       return;
     const transaction: Transaction = {
-      amount: state.amount.trim(),
+      amount: Number(state.amount.trim()),
       categoryId: state.category,
-      createdAt: new Date(),
+      createdAt: new Date().toISOString(),
       id: uuid(),
       note: state.note.trim().length ? state.note.trim() : null,
       relatedTxn: null,
-      timestamp: state.timestamp,
+      timestamp: state.timestamp.toISOString(),
       type: Number(state.type),
       walletId: state.wallet,
     };

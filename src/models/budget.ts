@@ -1,17 +1,3 @@
-export type BudgetRow = {
-  id: string;
-  category_id: string;
-  amount: string;
-  year: string;
-  month: string;
-  created_at: string;
-};
+import { budgets } from "@/database/schema";
 
-export type Budget = {
-  id: string;
-  categoryId: string;
-  amount: string;
-  year: string;
-  month: string;
-  createdAt: Date;
-};
+export type Budget = typeof budgets.$inferSelect;

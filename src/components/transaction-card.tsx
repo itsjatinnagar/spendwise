@@ -101,17 +101,17 @@ const styles = StyleSheet.create({
   },
 });
 
-function formatDate(date: Date) {
+function formatDate(date: string) {
   return new Intl.DateTimeFormat("en-IN", {
     day: "2-digit",
     month: "short",
     year: "numeric",
-  }).format(date);
+  }).format(new Date(date));
 }
 
-function formatAmount(amount: string) {
+function formatAmount(amount: number) {
   return new Intl.NumberFormat("en-IN", {
     currency: "INR",
     style: "currency",
-  }).format(Number(amount));
+  }).format(amount);
 }

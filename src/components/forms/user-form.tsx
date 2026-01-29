@@ -36,7 +36,7 @@ export default function UserForm() {
       return;
     categories.forEach(async (item) => {
       const category: Category = {
-        createdAt: new Date(),
+        createdAt: new Date().toISOString(),
         id: uuid(),
         name: item.name,
         type: item.type,
@@ -45,7 +45,7 @@ export default function UserForm() {
       await createCategory(category);
     });
     const user: User = {
-      createdAt: new Date(),
+      createdAt: new Date().toISOString(),
       currency: "INR",
       email: state.email.trim(),
       fullName: state.fullName.trim(),
@@ -53,10 +53,10 @@ export default function UserForm() {
     };
     await createUser(user);
     const wallet: Wallet = {
-      createdAt: new Date(),
-      currentBalance: state.balance.trim(),
+      createdAt: new Date().toISOString(),
+      currentBalance: Number(state.balance.trim()),
       id: uuid(),
-      initialBalance: state.balance.trim(),
+      initialBalance: Number(state.balance.trim()),
       name: "Physical Wallet",
       type: WalletType.CASH,
     };

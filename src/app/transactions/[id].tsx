@@ -165,19 +165,19 @@ const styles = StyleSheet.create({
   },
 });
 
-function formatAmount(amount: string) {
+function formatAmount(amount: number) {
   return new Intl.NumberFormat("en-IN", {
     currency: "INR",
     style: "currency",
-  }).format(Number(amount));
+  }).format(amount);
 }
 
-function formatDate(date: Date) {
+function formatDate(date: string) {
   return new Intl.DateTimeFormat("en-IN", {
     hour12: false,
     dateStyle: "full",
     timeStyle: "short",
-  }).format(date);
+  }).format(new Date(date));
 }
 
 type Props = {
@@ -207,7 +207,7 @@ function Actions({ transaction }: Props) {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: ({}) => (
+      headerRight: ({ }) => (
         <View
           style={{
             gap: 10,

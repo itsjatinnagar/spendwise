@@ -1,93 +1,62 @@
-import {
-  Transaction,
-  TransactionRow,
-  TransactionType,
-} from "@/models/transaction";
+import { database } from "@/database";
+import { transactions, wallets } from "@/database/schema";
+import { TransactionType } from "@/models/transaction";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useSQLiteContext } from "expo-sqlite";
-
-const toJson = (entity: Transaction): TransactionRow => ({
-  amount: entity.amount,
-  category_id: entity.categoryId,
-  created_at: entity.createdAt.toISOString(),
-  id: entity.id,
-  note: entity.note,
-  related_txn: entity.relatedTxn,
-  timestamp: entity.timestamp.toISOString(),
-  type: entity.type,
-  wallet_id: entity.walletId,
-});
-
-const fromJson = (row: TransactionRow): Transaction => ({
-  amount: row.amount,
-  categoryId: row.category_id,
-  createdAt: new Date(row.created_at),
-  id: row.id,
-  note: row.note,
-  relatedTxn: row.related_txn,
-  timestamp: new Date(row.timestamp),
-  type: row.type,
-  walletId: row.wallet_id,
-});
+import { desc, eq, sql } from "drizzle-orm";
 
 export const useTransactions = () => {
-  const db = useSQLiteContext();
   return useQuery({
     queryKey: ["transactions"],
     queryFn: async () => {
-      const query = "SELECT * FROM transactions ORDER BY created_at DESC";
-      const rows = await db.getAllAsync<TransactionRow>(query);
-      return rows.map((row) => fromJson(row));
+      return await database.select().from(transactions);
     },
   });
 };
 
 export const useRecentTransactions = () => {
-  const db = useSQLiteContext();
   return useQuery({
     queryKey: ["transactions", "recents"],
     queryFn: async () => {
-      const query =
-        "SELECT * FROM transactions ORDER BY timestamp DESC LIMIT 4";
-      const rows = await db.getAllAsync<TransactionRow>(query);
-      return rows.map((row) => fromJson(row));
+      return await database
+        .select()
+        .from(transactions)
+        .limit(4)
+        .orderBy(desc(transactions.timestamp));
     },
   });
 };
 
-export const useTransaction = (id: Transaction["id"]) => {
-  const db = useSQLiteContext();
+export const useTransaction = (id: string) => {
   return useQuery({
     queryKey: ["transactions", id],
     queryFn: async () => {
-      const query = "SELECT * FROM transactions WHERE id = ?";
-      const values = [id];
-      const row = await db.getFirstAsync<TransactionRow>(query, values);
-      return row ? fromJson(row) : null;
+      return (
+        await database
+          .select()
+          .from(transactions)
+          .where(eq(transactions.id, id))
+      ).at(0);
     },
   });
 };
 
 export const useCreateTransaction = () => {
-  const db = useSQLiteContext();
   const client = useQueryClient();
   return useMutation({
-    mutationFn: async (transaction: Transaction) => {
-      const request = toJson(transaction);
-      const keys = Object.keys(request);
-      const columns = `(${keys.join(", ")})`;
-      const params = `(${keys.map(() => "?").join(", ")})`;
+    mutationFn: async (transaction: typeof transactions.$inferInsert) => {
+      await database.transaction(async (tx) => {
+        await tx.insert(transactions).values(transaction);
 
-      const query = `INSERT INTO transactions ${columns} VALUES ${params}`;
-      const values = keys.map((key) => request[key as keyof TransactionRow]);
-      await db.runAsync(query, values);
+        const currentBalance =
+          transaction.type === TransactionType.EXPENSE
+            ? sql`${wallets.currentBalance} - ${transaction.amount}`
+            : sql`${wallets.currentBalance} + ${transaction.amount}`;
 
-      await db.runAsync(
-        `UPDATE wallets SET current_balance = current_balance ${
-          transaction.type === TransactionType.EXPENSE ? "-" : "+"
-        } ? WHERE id = ?`,
-        [transaction.amount, transaction.walletId]
-      );
+        await tx
+          .update(wallets)
+          .set({ currentBalance })
+          .where(eq(wallets.id, transaction.walletId));
+      });
     },
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ["transactions"] });
@@ -97,21 +66,26 @@ export const useCreateTransaction = () => {
 };
 
 export const useDeleteTransaction = () => {
-  const db = useSQLiteContext();
   const client = useQueryClient();
   return useMutation({
-    mutationFn: async (transaction: Transaction) => {
-      await db.runAsync(
-        `UPDATE wallets SET current_balance = current_balance ${
-          transaction.type === TransactionType.EXPENSE ? "+" : "-"
-        } ? WHERE id = ?`,
-        [transaction.amount, transaction.walletId]
-      );
-      await db.runAsync("DELETE FROM transactions WHERE id = ?", [
-        transaction.id,
-      ]);
+    mutationFn: async (transaction: typeof transactions.$inferSelect) => {
+      return await database.transaction(async (tx) => {
+        const currentBalance =
+          transaction.type === TransactionType.EXPENSE
+            ? sql`${wallets.currentBalance} + ${transaction.amount}`
+            : sql`${wallets.currentBalance} - ${transaction.amount}`;
+
+        await tx
+          .update(wallets)
+          .set({ currentBalance })
+          .where(eq(wallets.id, transaction.walletId));
+        await tx
+          .delete(transactions)
+          .where(eq(transactions.id, transaction.id));
+      });
     },
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
+      client.removeQueries({ queryKey: ["transactions", variables.id] });
       client.invalidateQueries({ queryKey: ["transactions"] });
       client.invalidateQueries({ queryKey: ["wallets"] });
     },

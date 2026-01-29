@@ -22,7 +22,7 @@ export default function Screen() {
     return Alert.alert("Error", "Undefined Data: Statistics Screen");
 
   const monthlyTransactions = transactions.filter(
-    (txn) => txn.timestamp >= startDate && txn.timestamp <= endDate
+    (txn) => new Date(txn.timestamp) >= startDate && new Date(txn.timestamp) <= endDate
   );
 
   const expenseCategories = categories.filter(
