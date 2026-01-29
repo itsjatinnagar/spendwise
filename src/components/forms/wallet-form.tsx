@@ -23,10 +23,10 @@ export default function WalletForm() {
 
   async function handleSubmit() {
     const wallet: Wallet = {
-      createdAt: new Date(),
-      currentBalance: state.balance.trim(),
+      createdAt: new Date().toISOString(),
+      currentBalance: Number(state.balance.trim()),
       id: uuid(),
-      initialBalance: state.balance.trim(),
+      initialBalance: Number(state.balance.trim()),
       name: state.name.trim(),
       type: Number(state.type),
     };

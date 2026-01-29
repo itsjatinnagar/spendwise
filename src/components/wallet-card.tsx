@@ -98,17 +98,17 @@ const styles = StyleSheet.create({
   },
 });
 
-function formatDate(date: Date) {
-  return date.toLocaleDateString("en-IN", {
+function formatDate(date: string) {
+  return new Intl.DateTimeFormat("en-IN", {
     year: "numeric",
     month: "short",
     day: "numeric",
-  });
+  }).format(new Date(date));
 }
 
-function formatAmount(amount: string) {
+function formatAmount(amount: number) {
   return new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: "INR",
-  }).format(Number(amount));
+  }).format(amount);
 }

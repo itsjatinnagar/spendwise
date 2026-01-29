@@ -37,13 +37,13 @@ export default function RefundForm({ transaction, wallets }: Props) {
   async function handleSubmit() {
     if (!state.amount.trim().length) return;
     const reTransaction: Transaction = {
-      amount: state.amount.trim(),
+      amount: Number(state.amount.trim()),
       categoryId: transaction.categoryId,
-      createdAt: new Date(),
+      createdAt: new Date().toISOString(),
       id: uuid(),
       note: state.note.trim().length ? state.note.trim() : null,
       relatedTxn: transaction.id,
-      timestamp: state.timestamp,
+      timestamp: state.timestamp.toISOString(),
       type: TransactionType.REFUND,
       walletId: state.wallet,
     };

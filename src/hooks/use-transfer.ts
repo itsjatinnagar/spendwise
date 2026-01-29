@@ -1,59 +1,36 @@
-import { Transfer, TransferRow } from "@/models/transfer";
+import { database } from "@/database";
+import { transfers, wallets } from "@/database/schema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useSQLiteContext } from "expo-sqlite";
-
-const toJson = (entity: Transfer): TransferRow => ({
-  amount: entity.amount,
-  created_at: entity.createdAt.toISOString(),
-  from_wallet: entity.fromWallet,
-  id: entity.id,
-  timestamp: entity.timestamp.toISOString(),
-  to_wallet: entity.toWallet,
-});
-
-const fromJson = (row: TransferRow): Transfer => ({
-  amount: row.amount,
-  createdAt: new Date(row.created_at),
-  fromWallet: row.from_wallet,
-  id: row.id,
-  timestamp: new Date(row.timestamp),
-  toWallet: row.to_wallet,
-});
+import { eq, sql } from "drizzle-orm";
 
 export const useTransfers = () => {
-  const db = useSQLiteContext();
   return useQuery({
     queryKey: ["transfers"],
     queryFn: async () => {
-      const query = "SELECT * FROM transfers";
-      const rows = await db.getAllAsync<TransferRow>(query);
-      return rows.map((r) => fromJson(r));
+      return await database.select().from(transfers);
     },
   });
 };
 
 export const useCreateTransfer = () => {
-  const db = useSQLiteContext();
   const client = useQueryClient();
   return useMutation({
-    mutationFn: async (transfer: Transfer) => {
-      const request = toJson(transfer);
-      const keys = Object.keys(request);
-      const columns = `(${keys.join(", ")})`;
-      const params = `(${keys.map(() => "?").join(", ")})`;
-
-      const query = `INSERT INTO transfers ${columns} VALUES ${params}`;
-      const values = keys.map((key) => request[key as keyof TransferRow]);
-      await db.runAsync(query, values);
-
-      await db.runAsync(
-        `UPDATE wallets SET current_balance = current_balance - ? WHERE id = ?`,
-        [request.amount, request.from_wallet]
-      );
-      await db.runAsync(
-        `UPDATE wallets SET current_balance = current_balance + ? WHERE id = ?`,
-        [request.amount, request.to_wallet]
-      );
+    mutationFn: async (transfer: typeof transfers.$inferInsert) => {
+      await database.transaction(async (tx) => {
+        await tx.insert(transfers).values(transfer);
+        await tx
+          .update(wallets)
+          .set({
+            currentBalance: sql`${wallets.currentBalance} - ${transfer.amount}`,
+          })
+          .where(eq(wallets.id, transfer.fromWallet));
+        await tx
+          .update(wallets)
+          .set({
+            currentBalance: sql`${wallets.currentBalance} + ${transfer.amount}`,
+          })
+          .where(eq(wallets.id, transfer.toWallet));
+      });
     },
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ["transfers"] });
