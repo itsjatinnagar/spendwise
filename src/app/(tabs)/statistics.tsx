@@ -1,130 +1,99 @@
-import { useCategories } from "@/hooks/use-category";
-import { useTransactions } from "@/hooks/use-transaction";
-import { CategoryType } from "@/models/category";
+import { useMonthlyStatistics } from "@/hooks/use-statistics";
 import { TransactionType } from "@/models/transaction";
 import { useNativeTheme } from "@/utils/theme";
-import { Feather } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Screen() {
-  const { data: transactions, isLoading: isL1 } = useTransactions();
-  const { data: categories, isLoading: isL2 } = useCategories();
+  const { data: statistics, isLoading: isL1 } = useMonthlyStatistics(
+    new Date(),
+  );
   const { colors, fonts } = useNativeTheme();
 
-  const now = new Date();
-  const startDate = new Date(now.getFullYear(), now.getMonth(), 1);
-  const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  if (isL1) return;
 
-  if (isL1 || isL2) return;
-
-  if (transactions === undefined || categories === undefined)
+  if (statistics === undefined)
     return Alert.alert("Error", "Undefined Data: Statistics Screen");
 
-  const monthlyTransactions = transactions.filter(
-    (txn) => new Date(txn.timestamp) >= startDate && new Date(txn.timestamp) <= endDate
-  );
+  const income = statistics
+    .filter((val) => val.type === TransactionType.INCOME)
+    .reduce((prev, current) => prev + current.amount, 0);
+  const expense = statistics
+    .filter((val) => val.type === TransactionType.EXPENSE)
+    .reduce((prev, current) => prev + current.amount, 0);
 
-  const expenseCategories = categories.filter(
-    (val) => val.type === CategoryType.EXPENSE
-  );
+  const renderCategoryCard = ({
+    item,
+  }: {
+    item: (typeof statistics)[number];
+  }) => {
+    const color =
+      item.type === TransactionType.INCOME
+        ? colors.successText
+        : colors.dangerText;
+    const icon =
+      item.type === TransactionType.INCOME ? "trending-up" : "trending-down";
 
-  const data = expenseCategories
-    .map((val) => ({
-      id: val.id,
-      name: val.name,
-      amount: monthlyTransactions
-        .filter((txn) => txn.categoryId === val.id)
-        .reduce((prev, curr) => prev + Number(curr.amount), 0),
-    }))
-    .sort((a, b) => b.amount - a.amount);
-
-  const expense = transactions
-    .filter((txn) => txn.type === TransactionType.EXPENSE)
-    .reduce((prev, curr) => prev + Number(curr.amount), 0);
-  const refund = transactions
-    .filter((txn) => txn.type === TransactionType.REFUND)
-    .reduce((prev, curr) => prev + Number(curr.amount), 0);
-  const income = transactions
-    .filter((txn) => txn.type === TransactionType.INCOME)
-    .reduce((prev, curr) => prev + Number(curr.amount), 0);
+    return (
+      <View style={[styles.tile, { backgroundColor: colors.background }]}>
+        <Text style={[styles.name, { color: colors.text }]}>
+          {item.category}
+        </Text>
+        <View style={styles.row}>
+          <View style={styles.item}>
+            <MaterialIcons name={icon} size={16} color={color} />
+            <Text style={[styles.text, { color }]}>
+              {formatAmount(item.amount)}
+            </Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView edges={["left", "right", "top"]} style={styles.container}>
       <Text style={fonts.title}>Statistics</Text>
-      <View style={styles.row}>
-        <View
-          style={[
-            {
-              flex: 1,
-              padding: 10,
-              borderRadius: 20,
-              alignItems: "center",
-              backgroundColor: colors.danger,
-            },
-          ]}
-        >
-          <Feather name="arrow-up-right" size={20} color={colors.dangerText} />
-          <Text style={{ color: colors.dangerText, fontSize: 16 }}>
-            {formatAmount(expense)}
-          </Text>
-        </View>
-        <View
-          style={[
-            {
-              flex: 1,
-              padding: 10,
-              borderRadius: 20,
-              alignItems: "center",
-              backgroundColor: colors.refund,
-            },
-          ]}
-        >
-          <Feather name="rotate-ccw" size={20} color={colors.refundText} />
-          <Text style={{ color: colors.refundText, fontSize: 16 }}>
-            {formatAmount(refund)}
-          </Text>
-        </View>
-        <View
-          style={[
-            {
-              flex: 1,
-              padding: 10,
-              borderRadius: 20,
-              alignItems: "center",
-              backgroundColor: colors.success,
-            },
-          ]}
-        >
-          <Feather
-            name="arrow-down-left"
-            size={20}
+
+      <View style={styles.wrapper}>
+        <View style={[styles.card, { backgroundColor: colors.background }]}>
+          <MaterialIcons
+            name="trending-up"
+            size={24}
             color={colors.successText}
           />
-          <Text style={{ color: colors.successText, fontSize: 16 }}>
+          <Text style={[styles.label, { color: colors.successText }]}>
+            Total Income
+          </Text>
+          <Text style={[styles.amount, { color: colors.successText }]}>
             {formatAmount(income)}
           </Text>
         </View>
+
+        <View style={[styles.card, { backgroundColor: colors.background }]}>
+          <MaterialIcons
+            name="trending-down"
+            size={24}
+            color={colors.dangerText}
+          />
+          <Text style={[styles.label, { color: colors.dangerText }]}>
+            Total Expense
+          </Text>
+          <Text style={[styles.amount, { color: colors.dangerText }]}>
+            {formatAmount(expense)}
+          </Text>
+        </View>
       </View>
+
+      <Text style={[styles.title, { color: colors.text }]}>
+        Category Breakdown
+      </Text>
+
       <FlatList
-        data={data}
-        keyExtractor={({ id }) => id}
-        renderItem={({ item }) => (
-          <View style={[styles.card, { backgroundColor: colors.background }]}>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 500,
-                color: colors.placeholder,
-              }}
-            >
-              {item.name}
-            </Text>
-            <Text style={{ fontSize: 16, fontWeight: 500 }}>
-              {formatAmount(item.amount)}
-            </Text>
-          </View>
-        )}
+        data={statistics}
+        renderItem={renderCategoryCard}
+        keyExtractor={(item) => item.id}
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
         showsVerticalScrollIndicator={false}
       />
@@ -139,22 +108,59 @@ const styles = StyleSheet.create({
     paddingBottom: 6,
     paddingHorizontal: 20,
   },
+  wrapper: {
+    gap: 10,
+    flexDirection: "row",
+  },
   card: {
-    padding: 20,
-    borderRadius: 20,
+    gap: 8,
+    flex: 1,
+    padding: 16,
+    borderRadius: 16,
+    alignItems: "center",
+  },
+  label: {
+    fontSize: 12,
+    fontWeight: 600,
+  },
+  amount: {
+    fontSize: 16,
+    fontWeight: 700,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 600,
+  },
+  tile: {
+    padding: 16,
+    borderRadius: 16,
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  name: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: 500,
   },
   row: {
     gap: 10,
     flexDirection: "row",
   },
+  item: {
+    gap: 4,
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  text: {
+    fontSize: 14,
+    fontWeight: 600,
+  },
 });
 
-function formatAmount(amount: number) {
+const formatAmount = (amount: number) => {
   return new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: "INR",
   }).format(amount);
-}
+};
