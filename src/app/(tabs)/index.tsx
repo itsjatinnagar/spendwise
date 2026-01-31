@@ -40,7 +40,7 @@ export default function Screen() {
   const firstName = user.fullName.split(" ")[0];
   const balance = wallets.reduce(
     (prev, curr) => prev + Number(curr.currentBalance),
-    0
+    0,
   );
 
   return (
