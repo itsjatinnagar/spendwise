@@ -61,7 +61,7 @@ export default function TransactionForm({ categories, wallets }: Props) {
   }
 
   const typeCategories = categories.filter(
-    (value) => value.type === state.type
+    (value) => value.type === state.type,
   );
 
   return (
@@ -188,6 +188,7 @@ export default function TransactionForm({ categories, wallets }: Props) {
 const styles = StyleSheet.create({
   form: {
     gap: 20,
+    paddingTop: 20,
   },
   row: {
     gap: 10,

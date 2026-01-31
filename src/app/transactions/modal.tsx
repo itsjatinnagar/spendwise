@@ -6,8 +6,8 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
-  View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Modal() {
   const { data: categories, isLoading: isL1 } = useCategories();
@@ -24,17 +24,19 @@ export default function Modal() {
     return Alert.alert("Error", "Undefined Data: Create Transaction Screen");
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <TransactionForm categories={categories} wallets={wallets} />
-      </ScrollView>
-    </KeyboardAvoidingView>
+    <SafeAreaView edges={["bottom", "left", "right"]} style={{ flex: 1 }}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <TransactionForm categories={categories} wallets={wallets} />
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
   },
 });
