@@ -27,7 +27,8 @@
             "image": "./assets/images/icon.png"
           }
         }
-      ]
+      ],
+      "expo-sqlite"
     ],
     "experiments": {
       "typedRoutes": true,
