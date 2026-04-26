@@ -5,7 +5,7 @@ import {
   text,
 } from "drizzle-orm/sqlite-core";
 
-const date = new Date().toISOString;
+const date = () => new Date().toISOString();
 
 export const users = sqliteTable("users", {
   id: text({ length: 36 }).primaryKey(),
@@ -19,7 +19,6 @@ export const accounts = sqliteTable("accounts", {
   name: text().notNull(),
   type: integer().notNull(),
   bank: text(),
-  metadata: text(),
   status: integer().notNull(),
   createdAt: text().notNull().$default(date),
 });
@@ -39,7 +38,6 @@ export const transactions = sqliteTable("transactions", {
   categoryId: text()
     .notNull()
     .references(() => categories.id),
-  relatedAcc: text().references(() => accounts.id),
   relatedTxn: text().references((): AnySQLiteColumn => transactions.id),
   amount: integer().notNull(),
   description: text().notNull(),
@@ -58,19 +56,50 @@ export const statements = sqliteTable("statements", {
 
 export const parsedTxns = sqliteTable("parsed_txns", {
   id: text({ length: 36 }).primaryKey(),
+  accountId: text()
+    .notNull()
+    .references(() => accounts.id),
+  categoryId: text().references(() => categories.id),
   statementId: text()
     .notNull()
     .references(() => statements.id),
-  data: text().notNull(),
+  amount: integer().notNull(),
+  description: text().notNull(),
+  note: text(),
+  timestamp: text().notNull(),
   status: integer().notNull(),
   createdAt: text().notNull().$default(date),
 });
 
+export const invests = sqliteTable("invests", {
+  id: text({ length: 36 }).primaryKey(),
+  accountId: text()
+    .notNull()
+    .references(() => accounts.id),
+  transactionId: text()
+    .notNull()
+    .references(() => transactions.id),
+  maturityAmount: integer().notNull(),
+  maturityDate: text().notNull(),
+  createdAt: text().notNull().$default(date),
+});
+
+export const loans = sqliteTable("loans", {
+  id: text({ length: 36 }).primaryKey(),
+  accountId: text()
+    .notNull()
+    .references(() => accounts.id),
+  transactionId: text()
+    .notNull()
+    .references(() => transactions.id),
+  createdAt: text().notNull().$default(date),
+});
+
 export enum AccountType {
+  BANK,
   CASH,
   INVEST,
   LOANS,
-  SAVINGS,
   WALLET,
 }
 
