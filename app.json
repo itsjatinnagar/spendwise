@@ -2,7 +2,7 @@
   "expo": {
     "name": "Spendwise",
     "slug": "spendwise",
-    "version": "2.4.0",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "spendwise",
@@ -15,7 +15,7 @@
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.itsjatinnagar.spendwise",
-      "versionCode": 5
+      "versionCode": 6
     },
     "plugins": [
       "expo-router",
