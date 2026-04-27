@@ -15,7 +15,12 @@ import {
 } from "@/utilities/lib";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  TextInputContentSizeChangeEvent,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 type State = {
@@ -38,6 +43,7 @@ export default function Screen() {
     note: txn?.note ?? "",
     status: txn?.status ?? ParsedTxnStatus.ORIGINAL,
   }));
+  const [height, setHeight] = useState(48);
 
   if (!txn) return;
 
@@ -46,6 +52,10 @@ export default function Screen() {
 
   const handleChange = (name: keyof State, value: string | number) => {
     setState((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSizeChange = (event: TextInputContentSizeChangeEvent) => {
+    setHeight(Math.abs(event.nativeEvent.contentSize.height));
   };
 
   const handleSubmit = async () => {
@@ -69,7 +79,13 @@ export default function Screen() {
           </FormField>
           <FormField>
             <Text.Label>Description</Text.Label>
-            <Input value={txn.description} multiline readOnly />
+            <Input
+              value={txn.description}
+              onContentSizeChange={handleSizeChange}
+              style={{ height }}
+              multiline
+              readOnly
+            />
           </FormField>
           <FormField>
             <Text.Label>Date</Text.Label>
