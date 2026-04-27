@@ -6,6 +6,7 @@ import Input from "@/components/common/input";
 import Text from "@/components/common/text";
 import { CategoryType, ParsedTxnStatus } from "@/database/schema";
 import { useCategories } from "@/hooks/use-categories";
+import { useKeyboardHeight } from "@/hooks/use-keyboard-height";
 import { useParsedTxn } from "@/hooks/use-parsed-txn";
 import { useUpdateParsedTxn } from "@/hooks/use-update-parsed-txn";
 import {
@@ -16,6 +17,7 @@ import {
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import {
+  KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
   TextInputContentSizeChangeEvent,
@@ -44,6 +46,7 @@ export default function Screen() {
     status: txn?.status ?? ParsedTxnStatus.ORIGINAL,
   }));
   const [height, setHeight] = useState(48);
+  const keyboardHeight = useKeyboardHeight();
 
   if (!txn) return;
 
@@ -71,65 +74,71 @@ export default function Screen() {
 
   return (
     <SafeAreaView style={styles.container} edges={["bottom", "left", "right"]}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Form>
-          <FormField>
-            <Text.Label>Amount</Text.Label>
-            <Input value={formatAmount(txn.amount)} readOnly />
-          </FormField>
-          <FormField>
-            <Text.Label>Description</Text.Label>
-            <Input
-              value={txn.description}
-              onContentSizeChange={handleSizeChange}
-              style={{ height }}
-              multiline
-              readOnly
-            />
-          </FormField>
-          <FormField>
-            <Text.Label>Date</Text.Label>
-            <Input value={formatDate(txn.timestamp)} readOnly />
-          </FormField>
-          <FormField>
-            <Text.Label>Category</Text.Label>
-            <View style={styles.row}>
-              {categories?.map((val) => (
-                <Chip
-                  key={val.id}
-                  label={val.name}
-                  selected={val.id === state.categoryId}
-                  callback={() => handleChange("categoryId", val.id)}
-                />
-              ))}
-            </View>
-          </FormField>
-          <FormField>
-            <Text.Label>Note</Text.Label>
-            <Input
-              placeholder="Additional Note"
-              value={state.note}
-              onChangeText={(text) => handleChange("note", text)}
-            />
-          </FormField>
-          <FormField>
-            <Text.Label>Status</Text.Label>
-            <View style={styles.row}>
-              {STATUSES.map((status) => (
-                <Chip
-                  key={status}
-                  label={parsedTxnStatusLabel(status)}
-                  selected={state.status === status}
-                  callback={() => handleChange("status", status)}
-                />
-              ))}
-            </View>
-          </FormField>
-          <Button onPress={handleSubmit} disabled={isPending}>
-            <Button.Label>Save</Button.Label>
-          </Button>
-        </Form>
-      </ScrollView>
+      <KeyboardAvoidingView style={styles.wrapper} behavior={undefined}>
+        <ScrollView
+          style={{ marginBottom: keyboardHeight }}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <Form>
+            <FormField>
+              <Text.Label>Amount</Text.Label>
+              <Input value={formatAmount(txn.amount)} readOnly />
+            </FormField>
+            <FormField>
+              <Text.Label>Description</Text.Label>
+              <Input
+                value={txn.description}
+                onContentSizeChange={handleSizeChange}
+                style={{ height }}
+                multiline
+                readOnly
+              />
+            </FormField>
+            <FormField>
+              <Text.Label>Date</Text.Label>
+              <Input value={formatDate(txn.timestamp)} readOnly />
+            </FormField>
+            <FormField>
+              <Text.Label>Category</Text.Label>
+              <View style={styles.row}>
+                {categories?.map((val) => (
+                  <Chip
+                    key={val.id}
+                    label={val.name}
+                    selected={val.id === state.categoryId}
+                    callback={() => handleChange("categoryId", val.id)}
+                  />
+                ))}
+              </View>
+            </FormField>
+            <FormField>
+              <Text.Label>Note</Text.Label>
+              <Input
+                placeholder="Additional Note"
+                value={state.note}
+                onChangeText={(text) => handleChange("note", text)}
+              />
+            </FormField>
+            <FormField>
+              <Text.Label>Status</Text.Label>
+              <View style={styles.row}>
+                {STATUSES.map((status) => (
+                  <Chip
+                    key={status}
+                    label={parsedTxnStatusLabel(status)}
+                    selected={state.status === status}
+                    callback={() => handleChange("status", status)}
+                  />
+                ))}
+              </View>
+            </FormField>
+            <Button onPress={handleSubmit} disabled={isPending}>
+              <Button.Label>Save</Button.Label>
+            </Button>
+          </Form>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -138,6 +147,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
+  },
+  wrapper: {
+    flex: 1,
+    paddingBottom: 12,
   },
   row: {
     gap: 8,
