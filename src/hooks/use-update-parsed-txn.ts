@@ -15,8 +15,8 @@ export const useUpdateParsedTxn = () => {
         .set(params)
         .where(eq(parsedTxns.id, params.id));
     },
-    onSuccess: (_, { statementId }) => {
-      client.invalidateQueries({ queryKey: ["parsed_txns", statementId] });
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ["parsed_txns"] });
     },
   });
 };
