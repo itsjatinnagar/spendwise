@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
-import { SymbolView } from "expo-symbols";
 import Text from "@/components/common/text";
 import FormField from "@/components/common/form-field";
 import Button from "@/components/common/button";
@@ -10,6 +9,8 @@ import { AccountType } from "@/database/schema";
 import Chip from "@/components/common/chip";
 import { router } from "expo-router";
 import { useParse } from "@/hooks/use-parse";
+import { CloudUpload } from "@/components/icons/cloud-upload";
+import { CheckCircle } from "@/components/icons/check-circle";
 
 export default function Screen() {
   const { data } = useAccounts();
@@ -47,7 +48,7 @@ export default function Screen() {
           <Pressable style={styles.picker} onPress={handlePick}>
             {file ? (
               <>
-                <SymbolView name={{ android: "check_circle" }} size={32} />
+                <CheckCircle />
                 <Text style={{ fontWeight: 600 }}>File has been imported</Text>
                 <Text.Caption style={{ textAlign: "center" }}>
                   Chosen file: {file.name}
@@ -55,11 +56,7 @@ export default function Screen() {
               </>
             ) : (
               <>
-                <SymbolView
-                  name={{ android: "cloud_upload" }}
-                  size={32}
-                  colors="#000000"
-                />
+                <CloudUpload />
                 <Text style={{ fontWeight: 600 }}>Select Statement File</Text>
                 <Text.Caption style={{ textAlign: "center" }}>
                   Upload and parse in a secure flow.

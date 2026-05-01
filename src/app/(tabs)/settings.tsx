@@ -1,10 +1,14 @@
 import Button from "@/components/common/button";
 import Text from "@/components/common/text";
 import { Link } from "expo-router";
-import { SymbolView } from "expo-symbols";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Constants from "expo-constants";
+import { Trash } from "@/components/icons/trash";
+import { Edit } from "@/components/icons/edit";
+import { Info } from "@/components/icons/info";
+import { CloudUpload } from "@/components/icons/cloud-upload";
+import { ChevronRight } from "@/components/icons/chevron-right";
 
 export default function Screen() {
   return (
@@ -22,43 +26,31 @@ export default function Screen() {
       <View style={styles.card}>
         <View style={{ gap: 8, alignItems: "center", flexDirection: "row" }}>
           <View style={styles.iconWrap}>
-            <SymbolView name={{ android: "edit" }} size={16} colors="#FFBA00" />
+            <Edit color="#FFBA00" />
           </View>
           <Text.Label style={{ flex: 1 }}>Edit Profile</Text.Label>
-          <SymbolView
-            name={{ android: "chevron_right" }}
-            size={16}
-            colors="#62748E"
-          />
+          <ChevronRight color="#62748E" />
         </View>
         <Link href="/imports">
           <View style={{ gap: 8, alignItems: "center", flexDirection: "row" }}>
             <View style={styles.iconWrap}>
-              <SymbolView
-                name={{ android: "cloud_upload" }}
-                size={16}
-                colors="#FFBA00"
-              />
+              <CloudUpload color="#FFBA00" />
             </View>
             <Text.Label style={{ flex: 1 }}>Import History</Text.Label>
-            <SymbolView
-              name={{ android: "chevron_right" }}
-              size={16}
-              colors="#62748E"
-            />
+            <ChevronRight color="#62748E" />
           </View>
         </Link>
         <View style={{ gap: 8, alignItems: "center", flexDirection: "row" }}>
           <View style={styles.iconWrap}>
-            <SymbolView name={{ android: "info" }} size={16} colors="#FFBA00" />
+            <Info color="#FFBA00" />
           </View>
           <Text.Label style={{ flex: 1 }}>Version</Text.Label>
           <Text.Caption>{Constants.expoConfig?.version}</Text.Caption>
         </View>
       </View>
 
-      <Button>
-        <SymbolView name={{ android: "delete" }} size={20} colors="#FFFFFF" />
+      <Button color="#E7000B">
+        <Trash color="#FFFFFF" />
         <Button.Label style={{ color: "#FFFFFF" }}>Delete Account</Button.Label>
       </Button>
     </SafeAreaView>

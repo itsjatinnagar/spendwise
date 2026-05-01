@@ -1,3 +1,7 @@
+import { Gear } from "@/components/icons/gear";
+import { Home } from "@/components/icons/home";
+import { Receipt } from "@/components/icons/receipt";
+import { Wallet } from "@/components/icons/wallet";
 import { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
 import { Tabs } from "expo-router";
 import { SymbolView } from "expo-symbols";
@@ -20,11 +24,7 @@ export default function TabsLayout() {
         name="index"
         options={{
           tabBarIcon: ({ color, size }) => (
-            <SymbolView
-              name={{ android: "dashboard" }}
-              colors={color}
-              size={size}
-            />
+            <Home color={color} height={size} width={size} />
           ),
         }}
       />
@@ -32,11 +32,7 @@ export default function TabsLayout() {
         name="accounts"
         options={{
           tabBarIcon: ({ color, size }) => (
-            <SymbolView
-              name={{ android: "wallet" }}
-              colors={color}
-              size={size}
-            />
+            <Wallet color={color} height={size} width={size} />
           ),
         }}
       />
@@ -44,11 +40,7 @@ export default function TabsLayout() {
         name="transactions"
         options={{
           tabBarIcon: ({ color, size }) => (
-            <SymbolView
-              name={{ android: "receipt" }}
-              colors={color}
-              size={size}
-            />
+            <Receipt color={color} height={size} width={size} />
           ),
         }}
       />
@@ -56,11 +48,7 @@ export default function TabsLayout() {
         name="settings"
         options={{
           tabBarIcon: ({ color, size }) => (
-            <SymbolView
-              name={{ android: "settings" }}
-              colors={color}
-              size={size}
-            />
+            <Gear color={color} height={size} width={size} />
           ),
         }}
       />

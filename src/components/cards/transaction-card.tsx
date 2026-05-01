@@ -1,8 +1,9 @@
 import { accounts, categories, transactions } from "@/database/schema";
-import { SymbolView } from "expo-symbols";
 import { StyleSheet, View } from "react-native";
 import Text from "../common/text";
 import { formatAmount, formatDate } from "@/utilities/lib";
+import { ArrowDownLeft } from "../icons/arrow-down-left";
+import { ArrowUpRight } from "../icons/arrow-up-right";
 
 type Props = {
   transaction: typeof transactions.$inferSelect & {
@@ -16,7 +17,11 @@ export default function TransactionCard({ transaction }: Props) {
     <View style={styles.container}>
       <View style={styles.wrapper}>
         <View style={styles.icon}>
-          <SymbolView name={{ android: "call_made" }} />
+          {transaction.amount > 0 ? (
+            <ArrowDownLeft color="#1AA44A" />
+          ) : (
+            <ArrowUpRight color="#E7000B" />
+          )}
         </View>
         <View style={{ gap: 4, flex: 1 }}>
           <Text.Label>{transaction.category}</Text.Label>
