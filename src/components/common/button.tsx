@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  ColorValue,
   Pressable,
   PressableProps,
   StyleSheet,
@@ -7,11 +8,16 @@ import {
 } from "react-native";
 import Text from "./text";
 
-function Root({ children, disabled, ...props }: PressableProps) {
+type Props = PressableProps & {
+  color?: ColorValue;
+};
+
+function Root({ children, color = "#FFBA00", disabled, ...props }: Props) {
   return (
     <Pressable
       style={({ pressed }) => [
         styles.pressable,
+        [{ backgroundColor: color }],
         pressed && styles.pressed,
         disabled && styles.disabled,
       ]}
@@ -34,7 +40,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "center",
-    backgroundColor: "#FFBA00",
   },
   pressed: {
     opacity: 0.8,

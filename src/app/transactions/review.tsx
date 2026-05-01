@@ -62,7 +62,6 @@ type Props = {
   txn: typeof parsedTxns.$inferSelect;
 };
 function Children({ txn }: Props) {
-  console.log(txn);
   const { data } = useCategories();
   const { isPending, mutateAsync } = useUpdateParsedTxn();
   const [state, setState] = useState<State>({

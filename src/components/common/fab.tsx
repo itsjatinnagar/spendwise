@@ -1,12 +1,12 @@
 import { Link, LinkProps } from "expo-router";
-import { SymbolView } from "expo-symbols";
+import { Plus } from "@/components/icons/plus";
 import { StyleSheet, View } from "react-native";
 
 export default function FAB(props: LinkProps) {
   return (
     <Link style={styles.container} {...props}>
       <View style={styles.button}>
-        <SymbolView name={{ android: "add" }} size={28} colors="#000000" />
+        <Plus />
       </View>
     </Link>
   );

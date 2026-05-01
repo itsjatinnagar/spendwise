@@ -1,9 +1,11 @@
 import { statements, StatementStatus } from "@/database/schema";
 import { Link } from "expo-router";
-import { SymbolView } from "expo-symbols";
 import { Pressable, StyleSheet, View } from "react-native";
 import Text from "../common/text";
 import { formatDate, statementStatusLabel } from "@/utilities/lib";
+import { ChevronRight } from "../icons/chevron-right";
+import { CheckCircle } from "../icons/check-circle";
+import { Clock } from "../icons/clock";
 
 type Props = {
   statement: typeof statements.$inferSelect;
@@ -18,9 +20,9 @@ export default function StatementCard({ statement }: Props) {
         <View style={styles.wrapper}>
           <View style={styles.badge}>
             {isCompleted ? (
-              <SymbolView name={{ android: "check_circle" }} size={18} />
+              <CheckCircle color="#FFBA00" />
             ) : (
-              <SymbolView name={{ android: "schedule" }} size={18} />
+              <Clock color="#FFBA00" />
             )}
             <Text.Caption style={{ textTransform: "uppercase" }}>
               {statementStatusLabel(statement.status)}
@@ -31,7 +33,7 @@ export default function StatementCard({ statement }: Props) {
             <Text.Caption>{formatDate(statement.createdAt)}</Text.Caption>
           </View>
         </View>
-        <SymbolView name={{ android: "chevron_right" }} size={32} />
+        <ChevronRight height="28" width="28" color="#FFBA00" />
       </Pressable>
     </Link>
   );
