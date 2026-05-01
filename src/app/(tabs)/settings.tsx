@@ -9,18 +9,28 @@ import { Edit } from "@/components/icons/edit";
 import { Info } from "@/components/icons/info";
 import { CloudUpload } from "@/components/icons/cloud-upload";
 import { ChevronRight } from "@/components/icons/chevron-right";
+import { useUser } from "@/hooks/use-user";
 
 export default function Screen() {
+  const { data, isLoading } = useUser();
+
+  if (isLoading || !data) return;
+
+  const initials = data.name
+    .split(" ")
+    .map((n) => n[0].toUpperCase())
+    .join("");
+
   return (
     <SafeAreaView style={styles.container} edges={["left", "right", "top"]}>
       <Text.Title>Settings</Text.Title>
       <View style={styles.row}>
         <View style={styles.avatar}>
-          <Text style={{ fontSize: 24, fontWeight: 600 }}>JD</Text>
+          <Text style={{ fontSize: 24, fontWeight: 600 }}>{initials}</Text>
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 20, fontWeight: 600 }}>John Doe</Text>
-          <Text>john.doe@email.com</Text>
+          <Text style={{ fontSize: 20, fontWeight: 600 }}>{data.name}</Text>
+          <Text>{data.email}</Text>
         </View>
       </View>
       <View style={styles.card}>
