@@ -4,7 +4,6 @@ import { Receipt } from "@/components/icons/receipt";
 import { Wallet } from "@/components/icons/wallet";
 import { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
 import { Tabs } from "expo-router";
-import { SymbolView } from "expo-symbols";
 import { StyleSheet } from "react-native";
 
 export default function TabsLayout() {
