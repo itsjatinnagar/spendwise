@@ -13,6 +13,7 @@ export default function Layout() {
   return (
     <Stack screenOptions={screenOptions}>
       <Stack.Screen name="review" options={{ headerTitle: "" }} />
+      <Stack.Screen name="[id]" options={{ headerTitle: "" }} />
     </Stack>
   );
 }
