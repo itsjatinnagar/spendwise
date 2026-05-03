@@ -1,98 +1,105 @@
-[
-  {
-    "name": "Transfer Out",
-    "type": 2
-  },
-  {
-    "name": "Transfer In",
-    "type": 2
-  },
-  {
-    "name": "Money Lent",
-    "type": 2
-  },
-  {
-    "name": "Lent Repaid",
-    "type": 2
-  },
-  {
-    "name": "Money Borrowed",
-    "type": 2
-  },
-  {
-    "name": "Borrow Repaid",
-    "type": 2
-  },
-  {
-    "name": "Invest Buy",
-    "type": 2
-  },
-  {
-    "name": "Invest Sell",
-    "type": 2
-  },
-  {
-    "name": "Salary",
-    "type": 1
-  },
-  {
-    "name": "Gifts",
-    "type": 1
-  },
-  {
-    "name": "Cashback",
-    "type": 1
-  },
-  {
-    "name": "Others",
-    "type": 1
-  },
-  {
-    "name": "Rent & Mortgage",
-    "type": 0
-  },
-  {
-    "name": "Bills & Utilities",
-    "type": 0
-  },
-  {
-    "name": "Food & Dining",
-    "type": 0
-  },
-  {
-    "name": "Groceries",
-    "type": 0
-  },
-  {
-    "name": "Transportation",
-    "type": 0
-  },
-  {
-    "name": "Entertainment",
-    "type": 0
-  },
-  {
-    "name": "Shopping",
-    "type": 0
-  },
-  {
-    "name": "Health & Fitness",
-    "type": 0
-  },
-  {
-    "name": "Insurance",
-    "type": 0
-  },
-  {
-    "name": "Gifts",
-    "type": 0
-  },
-  {
-    "name": "Personal Hygiene",
-    "type": 0
-  },
-  {
-    "name": "Others",
-    "type": 0
-  }
-]
+{
+  "version": 1,
+  "categories": [
+    {
+      "name": "Refund",
+      "type": 2
+    },
+    {
+      "name": "Transfer Out",
+      "type": 2
+    },
+    {
+      "name": "Transfer In",
+      "type": 2
+    },
+    {
+      "name": "Money Lent",
+      "type": 2
+    },
+    {
+      "name": "Lent Repaid",
+      "type": 2
+    },
+    {
+      "name": "Money Borrowed",
+      "type": 2
+    },
+    {
+      "name": "Borrow Repaid",
+      "type": 2
+    },
+    {
+      "name": "Invest Buy",
+      "type": 2
+    },
+    {
+      "name": "Invest Sell",
+      "type": 2
+    },
+    {
+      "name": "Salary",
+      "type": 1
+    },
+    {
+      "name": "Gifts",
+      "type": 1
+    },
+    {
+      "name": "Cashback",
+      "type": 1
+    },
+    {
+      "name": "Others",
+      "type": 1
+    },
+    {
+      "name": "Rent & Mortgage",
+      "type": 0
+    },
+    {
+      "name": "Bills & Utilities",
+      "type": 0
+    },
+    {
+      "name": "Food & Dining",
+      "type": 0
+    },
+    {
+      "name": "Groceries",
+      "type": 0
+    },
+    {
+      "name": "Transportation",
+      "type": 0
+    },
+    {
+      "name": "Entertainment",
+      "type": 0
+    },
+    {
+      "name": "Shopping",
+      "type": 0
+    },
+    {
+      "name": "Health & Fitness",
+      "type": 0
+    },
+    {
+      "name": "Insurance",
+      "type": 0
+    },
+    {
+      "name": "Gifts",
+      "type": 0
+    },
+    {
+      "name": "Personal Hygiene",
+      "type": 0
+    },
+    {
+      "name": "Others",
+      "type": 0
+    }
+  ]
+}

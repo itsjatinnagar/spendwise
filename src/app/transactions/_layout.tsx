@@ -14,6 +14,7 @@ export default function Layout() {
     <Stack screenOptions={screenOptions}>
       <Stack.Screen name="review" options={{ headerTitle: "" }} />
       <Stack.Screen name="[id]" options={{ headerTitle: "" }} />
+      <Stack.Screen name="refunds/[id]" options={{ headerTitle: "" }} />
     </Stack>
   );
 }
