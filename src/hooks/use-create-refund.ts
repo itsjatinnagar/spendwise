@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 
 type Params = {
   id: string;
+  note: string | null;
   relatedTxn: string;
 };
 
@@ -12,7 +13,7 @@ export const useCreateRefund = () => {
   const client = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, relatedTxn }: Params) => {
+    mutationFn: async ({ id, note, relatedTxn }: Params) => {
       const result = await database
         .select()
         .from(categories)
@@ -20,7 +21,7 @@ export const useCreateRefund = () => {
       const categoryId = result[0].id;
       await database
         .update(transactions)
-        .set({ categoryId, relatedTxn })
+        .set({ categoryId, note, relatedTxn })
         .where(eq(transactions.id, id));
     },
     onSuccess: () => {

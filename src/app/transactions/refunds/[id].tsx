@@ -12,8 +12,9 @@ export default function Screen() {
   const { isPending, mutateAsync } = useCreateRefund();
   const transactions = data?.filter((item) => item.amount < 0);
 
-  const handlePress = async (relatedTxn: string) => {
-    await mutateAsync({ id, relatedTxn });
+  const handlePress = async (note: string | null, relatedTxn: string) => {
+    note = note ? `Re: ${note}` : null;
+    await mutateAsync({ id, note, relatedTxn });
     router.back();
   };
 
@@ -25,7 +26,10 @@ export default function Screen() {
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
-          <Pressable onPress={() => handlePress(item.id)} style={styles.card}>
+          <Pressable
+            onPress={() => handlePress(item.note, item.id)}
+            style={styles.card}
+          >
             <View>
               <Text.Label>{item.account}</Text.Label>
               <Text.Caption>{formatDate(item.timestamp)}</Text.Caption>
