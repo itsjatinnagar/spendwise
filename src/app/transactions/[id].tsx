@@ -93,7 +93,7 @@ export default function Screen() {
           <Text.Label>Description</Text.Label>
           <Text>{data.description}</Text>
         </View>
-        {data.note ?? (
+        {data.note && (
           <View>
             <Text.Label>Note</Text.Label>
             <Text>{data.note}</Text>
