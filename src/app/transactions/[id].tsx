@@ -43,6 +43,14 @@ export default function Screen() {
     });
   };
 
+  const handleInvest = () => {
+    handleClose();
+    router.push({
+      pathname: "/transactions/invests/[id]",
+      params: { id: data.id },
+    });
+  };
+
   const color = data.amount > 0 ? "#1AA44A" : "#E7000B";
 
   return (
@@ -141,7 +149,7 @@ export default function Screen() {
                 Lorem Ipsum is simply dummy text of the printing.
               </Text.Caption>
             </Pressable>
-            <Pressable>
+            <Pressable onPress={handleInvest}>
               <Text.Label style={{ fontSize: 16 }}>Create Invest</Text.Label>
               <Text.Caption>
                 Lorem Ipsum is simply dummy text of the printing.
