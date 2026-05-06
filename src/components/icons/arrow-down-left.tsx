@@ -3,8 +3,8 @@ import SVG, { Path, SvgProps } from "react-native-svg";
 export function ArrowDownLeft(props: SvgProps) {
   return (
     <SVG
-      width="16"
-      height="16"
+      width="20"
+      height="20"
       fill="none"
       strokeWidth="2"
       viewBox="0 0 24 24"
