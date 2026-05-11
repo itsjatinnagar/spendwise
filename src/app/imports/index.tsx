@@ -1,13 +1,17 @@
 import StatementCard from "@/components/cards/statement-card";
 import FAB from "@/components/common/fab";
+import Loader from "@/components/common/loader";
 import { useStatements } from "@/hooks/use-statements";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Screen() {
-  const { data } = useStatements();
+  const { data, isLoading } = useStatements();
+
+  if (isLoading) return <Loader />;
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["bottom", "left", "right"]}>
       <FlatList
         data={data}
         contentContainerStyle={styles.list}
@@ -16,7 +20,7 @@ export default function Screen() {
         renderItem={({ item }) => <StatementCard statement={item} />}
       />
       <FAB href="/imports/upload" />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -27,6 +31,7 @@ const styles = StyleSheet.create({
   },
   list: {
     gap: 16,
+    paddingBottom: 60,
     paddingVertical: 20,
   },
 });
