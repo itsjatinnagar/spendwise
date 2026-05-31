@@ -2,7 +2,7 @@
   "expo": {
     "name": "Spendwise",
     "slug": "spendwise",
-    "version": "3.1.0",
+    "version": "3.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "spendwise",
@@ -15,7 +15,7 @@
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.itsjatinnagar.spendwise",
-      "versionCode": 7
+      "versionCode": 8
     },
     "plugins": [
       "expo-router",
@@ -25,7 +25,7 @@
           "backgroundColor": "#FFFFFF",
           "android": {
             "image": "./assets/images/icon.png",
-            "imageWidth": 96
+            "imageWidth": 200
           }
         }
       ],
