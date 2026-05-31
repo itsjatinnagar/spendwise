@@ -69,7 +69,7 @@ export default function Screen() {
           </View>
         </FormField>
         <FormField>
-          <Text.Label>Amount</Text.Label>
+          <Text.Label>Maturity Amount</Text.Label>
           <Input
             placeholder="9876.98"
             value={state.amount}
@@ -77,7 +77,7 @@ export default function Screen() {
           />
         </FormField>
         <FormField>
-          <Text.Label>Date</Text.Label>
+          <Text.Label>Maturity Date</Text.Label>
           <Input
             placeholder="YYYY-MM-DD"
             value={state.date}

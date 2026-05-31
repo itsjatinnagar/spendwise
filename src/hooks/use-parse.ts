@@ -1,12 +1,16 @@
 import { database } from "@/database";
 import {
   accounts,
+  categories,
   parsedTxns,
   ParsedTxnStatus,
   statements,
   StatementStatus,
+  transactions,
 } from "@/database/schema";
+import { inferCategory } from "@/utilities/autofill";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { eq, getTableColumns } from "drizzle-orm";
 import * as Crypto from "expo-crypto";
 
 type ResType = {
@@ -36,6 +40,20 @@ export const useParse = () => {
     mutationFn: async ({ accountId, fileName, formData }: Params) => {
       const rows = await callParser(formData);
 
+      const committed = await database
+        .select({
+          ...getTableColumns(transactions),
+          _categoryId: categories.id,
+        })
+        .from(transactions)
+        .innerJoin(categories, eq(categories.id, transactions.categoryId));
+      const history = committed.map((row) => ({
+        description: row.description,
+        categoryId: row._categoryId,
+        note: row.note,
+        timestamp: row.timestamp,
+      }));
+
       await database.transaction(async (tx) => {
         const statementId = Crypto.randomUUID();
 
@@ -45,17 +63,31 @@ export const useParse = () => {
           status: StatementStatus.PARSED,
         });
 
-        await tx.insert(parsedTxns).values(
-          rows.map((row) => ({
+        const values = rows.map((row) => {
+          let categoryId = null;
+          let note = null;
+          const suggestions = inferCategory(row.narration, history);
+          const top = suggestions[0];
+
+          if (top) {
+            categoryId = top.categoryId;
+            note = top.note;
+          }
+
+          return {
             id: Crypto.randomUUID(),
             accountId,
             amount: row.amount,
+            categoryId,
             description: row.narration,
+            note,
             statementId,
             status: ParsedTxnStatus.ORIGINAL,
             timestamp: row.timestamp,
-          })),
-        );
+          };
+        });
+
+        await tx.insert(parsedTxns).values(values);
       });
     },
     onSuccess: () => {
