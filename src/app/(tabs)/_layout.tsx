@@ -1,5 +1,6 @@
 import { Gear } from "@/components/icons/gear";
 import { Home } from "@/components/icons/home";
+import { Pie } from "@/components/icons/pie";
 import { Receipt } from "@/components/icons/receipt";
 import { Wallet } from "@/components/icons/wallet";
 import { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
@@ -32,6 +33,14 @@ export default function TabsLayout() {
         options={{
           tabBarIcon: ({ color, size }) => (
             <Wallet color={color} height={size} width={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="analytics"
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Pie color={color} height={size} width={size} />
           ),
         }}
       />
