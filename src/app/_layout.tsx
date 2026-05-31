@@ -1,10 +1,11 @@
 import * as SplashScreen from "expo-splash-screen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
-import { database } from "@/database";
+import { database, expoDB } from "@/database";
 import migrations from "@/drizzle/migrations";
 import { StatusBar } from "expo-status-bar";
 import { Stack } from "expo-router";
+import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
 import OnboardProvider, { useOnboard } from "@/contexts/onboard-context";
 
 void SplashScreen.preventAutoHideAsync();
@@ -26,6 +27,7 @@ export default function RootLayout() {
 }
 
 function Children() {
+  useDrizzleStudio(expoDB);
   const { isOnboarded } = useOnboard();
 
   if (isOnboarded === null) return;

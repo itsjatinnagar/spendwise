@@ -5,6 +5,7 @@ import FormField from "@/components/common/form-field";
 import Input from "@/components/common/input";
 import Text from "@/components/common/text";
 import { CategoryType, parsedTxns, ParsedTxnStatus } from "@/database/schema";
+import { useAutofill } from "@/hooks/use-autofill";
 import { useCategories } from "@/hooks/use-categories";
 import { useKeyboardHeight } from "@/hooks/use-keyboard-height";
 import { useParsedTxn } from "@/hooks/use-parsed-txn";
@@ -15,7 +16,7 @@ import {
   parsedTxnStatusLabel,
 } from "@/utilities/lib";
 import { router, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -71,6 +72,8 @@ function Children({ txn }: Props) {
   });
   const [height, setHeight] = useState(48);
 
+  const { data: suggestions } = useAutofill(txn.description, txn.statementId);
+
   const TYPE = txn.amount < 0 ? CategoryType.EXPENSE : CategoryType.INCOME;
   const categories = data?.filter((val) => val.type === TYPE);
 
@@ -92,6 +95,20 @@ function Children({ txn }: Props) {
     });
     router.back();
   };
+
+  useEffect(() => {
+    if (state.categoryId) return;
+    if (state.note) return;
+    if (!suggestions || suggestions.length === 0) return;
+
+    const top = suggestions[0];
+    setState((prev) => ({
+      ...prev,
+      categoryId: top.categoryId,
+      note: top.note ?? "",
+    }));
+    console.log("State Modified");
+  }, [suggestions]);
 
   return (
     <Form>
