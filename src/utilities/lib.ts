@@ -1,5 +1,6 @@
 import {
   AccountType,
+  CategoryType,
   ParsedTxnStatus,
   StatementStatus,
 } from "@/database/schema";
@@ -16,6 +17,17 @@ export const accountTypeLabel = (type: AccountType) => {
       return "Loan";
     case AccountType.WALLET:
       return "Wallet";
+  }
+};
+
+export const categoryTypeLabel = (type: CategoryType) => {
+  switch (type) {
+    case CategoryType.EXPENSE:
+      return "Expense";
+    case CategoryType.INCOME:
+      return "Income";
+    case CategoryType.SYSTEM:
+      return "System";
   }
 };
 
