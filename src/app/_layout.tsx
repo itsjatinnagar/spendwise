@@ -7,6 +7,7 @@ import { StatusBar } from "expo-status-bar";
 import { Stack } from "expo-router";
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
 import OnboardProvider, { useOnboard } from "@/contexts/onboard-context";
+import { ToastProvider } from "@/contexts/toast-context";
 
 void SplashScreen.preventAutoHideAsync();
 const client = new QueryClient();
@@ -19,8 +20,10 @@ export default function RootLayout() {
   return (
     <OnboardProvider>
       <QueryClientProvider client={client}>
-        <Children />
-        <StatusBar style="dark" />
+        <ToastProvider>
+          <Children />
+          <StatusBar style="dark" />
+        </ToastProvider>
       </QueryClientProvider>
     </OnboardProvider>
   );

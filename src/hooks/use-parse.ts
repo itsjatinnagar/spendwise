@@ -1,3 +1,4 @@
+import { useToast } from "@/contexts/toast-context";
 import { database } from "@/database";
 import {
   accounts,
@@ -35,6 +36,7 @@ type Params = {
 
 export const useParse = () => {
   const client = useQueryClient();
+  const { showError } = useToast();
 
   return useMutation({
     mutationFn: async ({ accountId, fileName, formData }: Params) => {
@@ -92,6 +94,9 @@ export const useParse = () => {
     },
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ["statements"] });
+    },
+    onError: (err) => {
+      showError(err.message);
     },
   });
 };
