@@ -41,6 +41,15 @@ export default function Screen() {
           <Text.Label style={{ flex: 1 }}>Edit Profile</Text.Label>
           <ChevronRight color="#62748E" />
         </View>
+        <Link href="/transfers">
+          <View style={{ gap: 8, alignItems: "center", flexDirection: "row" }}>
+            <View style={styles.iconWrap}>
+              <CloudUpload color="#FFBA00" />
+            </View>
+            <Text.Label style={{ flex: 1 }}>Transfers</Text.Label>
+            <ChevronRight color="#62748E" />
+          </View>
+        </Link>
         <Link href="/imports">
           <View style={{ gap: 8, alignItems: "center", flexDirection: "row" }}>
             <View style={styles.iconWrap}>

@@ -107,7 +107,6 @@ function Children({ txn }: Props) {
       categoryId: top.categoryId,
       note: top.note ?? "",
     }));
-    console.log("State Modified");
   }, [suggestions]);
 
   return (
