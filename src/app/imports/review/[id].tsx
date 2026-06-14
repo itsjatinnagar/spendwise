@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexGrow: 0,
+    flexShrink: 0,
   },
   chip: {
     gap: 8,
