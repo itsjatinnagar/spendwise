@@ -1,4 +1,5 @@
 import TransactionCard from "@/components/cards/transaction-card";
+import FAB from "@/components/common/fab";
 import Text from "@/components/common/text";
 import { useTransactions } from "@/hooks/use-transactions";
 import { FlatList, StyleSheet } from "react-native";
@@ -17,6 +18,7 @@ export default function Screen() {
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => <TransactionCard transaction={item} />}
       />
+      <FAB href="/transactions/create" />
     </SafeAreaView>
   );
 }
