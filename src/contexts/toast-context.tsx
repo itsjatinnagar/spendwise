@@ -1,14 +1,25 @@
 import Text from "@/components/common/text";
-import { createContext, useContext, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { Animated, StyleSheet } from "react-native";
 
 type ContextType = { showError: (message: string) => void };
 const Context = createContext<ContextType>({ showError: () => {} });
 
+let globalShowError: ((message: string) => void) | null = null;
+
+export function showGlobalError(message: string) {
+  if (globalShowError) {
+    globalShowError(message);
+  } else {
+    console.warn("Global Toast error requested before provider initialization:", message);
+  }
+}
+
 export function ToastProvider({ children }: React.PropsWithChildren) {
   const [message, setMessage] = useState("");
   const opacity = useRef(new Animated.Value(0)).current;
-  const showError = (msg: string) => {
+
+  const showError = useCallback((msg: string) => {
     setMessage(msg);
     Animated.sequence([
       Animated.timing(opacity, {
@@ -23,7 +34,14 @@ export function ToastProvider({ children }: React.PropsWithChildren) {
         useNativeDriver: true,
       }),
     ]).start();
-  };
+  }, [opacity]);
+
+  useEffect(() => {
+    globalShowError = showError;
+    return () => {
+      globalShowError = null;
+    };
+  }, [showError]);
 
   return (
     <Context.Provider value={{ showError }}>
