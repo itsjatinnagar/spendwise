@@ -27,6 +27,7 @@ export default function Screen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: "relative",
     paddingHorizontal: 20,
   },
   list: {
